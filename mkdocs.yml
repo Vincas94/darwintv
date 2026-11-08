@@ -44,6 +44,7 @@ nav:
   - Hardware:
       - Raspberry Pi 5: hardware/pi5.md
   - Boot flow: boot-flow.md
+  - Updating images: updates.md
   - tvOS: tvos.md
   - Research:
       - Initial survey (2026-11-08): research/2026-11-08-initial-survey.md
@@ -52,4 +53,5 @@ nav:
       - "0002 — Pinned XNU and patches": decisions/0002-pinned-xnu-and-patches.md
       - "0003 — AppleTV5,3 / tvOS 16": decisions/0003-target-appletv5-3-tvos-16.md
       - "0004 — QEMU first": decisions/0004-qemu-first.md
+      - "0005 — File-based updates": decisions/0005-update-workflow.md
   - Contributing: contributing.md

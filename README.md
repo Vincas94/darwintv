@@ -71,6 +71,11 @@ On the Pi 5, copy `bootloader/build/pi5/loader8.img` to the boot partition and u
 `configs/pi5/config.txt`. Connect a **3.3 V** USB-UART adapter to the 3-pin debug connector at
 **115200 8N1** — see [`docs/hardware/pi5.md`](docs/hardware/pi5.md).
 
+## Updating without reflashing
+
+The boot partition is FAT32 and the loader/payload are files. Kernel updates are a single
+`payload.bin` copy; root updates are incremental. See [`docs/updates.md`](docs/updates.md).
+
 ## Repository layout
 
 | Path | What |

@@ -60,3 +60,9 @@ hello from the other side of the SoC
 - Try `BOOT_UART=1` and `uart_2ndstage=1` to see whether the firmware itself is talking.
 - The 40-pin header UART is on RP1 and is not the debug UART; do not use it for
   this loader.
+
+## Updating without reflashing
+
+The boot partition is FAT32. To update the loader, copy `loader8.img`; to update the kernel, copy
+`payload.bin` (see `configs/pi5/config-payload.txt`). The root filesystem lives on its own
+partition and is updated with `rsync` or `bmaptool`. See [Updating images](../../docs/updates.md).

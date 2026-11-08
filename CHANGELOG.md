@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Architecture, hardware and tvOS research notes.
 - Apple Device Tree writer and IPSW listing tools.
 - M1 bare-metal AArch64 loader: EL3/EL2→EL1, PL011 console, Pi 5 and QEMU targets.
+- Update workflow: FAT32 boot files, separate `payload.bin`, incremental root updates, A/B slots.
 
 ## [0.0.1] - 2026-11-08
 

@@ -86,7 +86,11 @@ python -m tools.adt --out build/pi5.adt
 python -m tools.ipsw list "$IPSW_PATH"
 ```
 
-## 7. Next milestone
+## 7. Updating without reflashing
+
+The boot partition is FAT32; the loader and payload are files. See [Updating images](updates.md).
+
+## 8. Next milestone
 
 M2 replaces the final `wfe` loop with the XNU handoff: parse the firmware FDT, copy the Mach-O,
 build the ADT and `boot_args`, and jump. See [Boot flow](boot-flow.md).
