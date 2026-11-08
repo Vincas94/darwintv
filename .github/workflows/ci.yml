@@ -79,8 +79,9 @@ jobs:
         run: |
           timeout 8 qemu-system-aarch64 -M raspi4b \
             -kernel bootloader/build/qemu-raspi4b/loader8.img \
-            -device loader,file=/tmp/payload.bin,addr=0x08000000 \
+            -device loader,file=/tmp/payload.bin,addr=0x08000000,force-raw=on \
             -serial stdio -display none -monitor none > /tmp/raspi4b.log 2>&1 || true
+          cat /tmp/raspi4b.log
           grep -q 'DarwinTV loader' /tmp/raspi4b.log
           grep -q 'payload:  DTVPLD01' /tmp/raspi4b.log
           grep -q 'payload valid' /tmp/raspi4b.log
@@ -88,8 +89,9 @@ jobs:
         run: |
           timeout 8 qemu-system-aarch64 -M virt,gic-version=2 -cpu cortex-a76 -smp 4 -m 2G \
             -kernel bootloader/build/qemu-virt/loader.elf \
-            -device loader,file=/tmp/payload.bin,addr=0x48000000 \
+            -device loader,file=/tmp/payload.bin,addr=0x48000000,force-raw=on \
             -serial stdio -display none -monitor none > /tmp/virt.log 2>&1 || true
+          cat /tmp/virt.log
           grep -q 'DarwinTV loader' /tmp/virt.log
           grep -q 'payload:  DTVPLD01' /tmp/virt.log
           grep -q 'payload valid' /tmp/virt.log
