@@ -110,6 +110,7 @@ def pi5_adt(
     dram_size: int = 0x0FE000000,
     cmdline: str = "debug=0xc serial=1 cpus=1 keepsyms=1 -noprogress",
     timebase: int = TIMEBASE_HZ,
+    ramdisk: tuple[int, int] | None = None,
 ) -> bytes:
     """Build the reference ADT for the Raspberry Pi 5.
 
@@ -126,7 +127,10 @@ def pi5_adt(
     chosen.prop("boot-args", cmdline)
     # XNU's early random wants a non-zero seed; the bootloader replaces this.
     chosen.prop("random-seed", bytes([0xA5]) * 256)
-    chosen.child("memory-map")
+    memory_map = chosen.child("memory-map")
+    if ramdisk is not None:
+        base, size = ramdisk
+        memory_map.prop("RAMDisk", u64(base) + u64(size))
 
     cpus = root.child("cpus")
     cpu0 = cpus.child("cpu0")
@@ -174,12 +178,21 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--cmdline", default="debug=0xc serial=1 cpus=1 keepsyms=1 -noprogress")
     parser.add_argument("--dram-base", type=lambda x: int(x, 0), default=0x02000000)
     parser.add_argument("--dram-size", type=lambda x: int(x, 0), default=0x0FE000000)
+    parser.add_argument("--ramdisk-base", type=lambda x: int(x, 0), default=None)
+    parser.add_argument("--ramdisk-size", type=lambda x: int(x, 0), default=None)
     args = parser.parse_args(argv)
+
+    ramdisk = None
+    if args.ramdisk_base is not None and args.ramdisk_size is not None:
+        ramdisk = (args.ramdisk_base, args.ramdisk_size)
+    elif args.ramdisk_base is not None or args.ramdisk_size is not None:
+        parser.error("--ramdisk-base and --ramdisk-size must be given together")
 
     blob = pi5_adt(
         dram_base=args.dram_base,
         dram_size=args.dram_size,
         cmdline=args.cmdline,
+        ramdisk=ramdisk,
     )
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_bytes(blob)

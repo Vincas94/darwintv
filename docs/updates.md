@@ -183,3 +183,5 @@ filesystem is updated with `rsync`/`bmaptool`, not a full image write.
 - Keep `payload-a.bin` as a known-good slot and a `config-recovery.txt` on p1.
 - The serial console is the recovery console: if a payload panics, power-cycle and pick the other
   slot, or XMODEM a known-good payload.
+
+See [Booting large images](large-images.md) for the size tiers and the block-storage / RAM-disk paths.

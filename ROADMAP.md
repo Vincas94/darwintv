@@ -9,7 +9,7 @@ someone else.
 | **M1 — Hello UART** | in progress | `DarwinTV loader` banner on the Pi 5 debug UART | `bootloader/`, `configs/pi5/` |
 | **M2 — XNU console** | planned | XNU banner and `bsd_init` on the Pi 5 UART | BCM2712 board config, ADT, boot_args |
 | **M3 — Interrupts** | planned | GICv2 timer and UART RX IRQs stable | GIC-400 driver, PPI 27, SPI attach |
-| **M4 — Root** | planned | HFS+ root mounts; `launchd` starts | SDHCI, HFS+, dyld cache, root tweaks |
+| **M4 — Root** | planned | HFS+ root mounts; `launchd` starts | M4a RAM-disk root via U-Boot; M4b SDHCI + HFS+ persistent root |
 | **M5 — PineBoard** | planned | tvOS home screen drawn at 1080p | IOSurface, IOMobileFramebuffer, HID, identity |
 | **M6 — Long tail** | planned | usable input/network/GPU | RP1/PCIe, USB, BT, V3D |
 

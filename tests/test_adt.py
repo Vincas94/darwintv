@@ -37,3 +37,9 @@ def test_pi5_adt_contains_required_nodes() -> None:
 
 def test_pi5_adt_is_deterministic() -> None:
     assert pi5_adt() == pi5_adt()
+
+
+def test_pi5_adt_can_describe_a_ramdisk() -> None:
+    blob = pi5_adt(ramdisk=(0x100000000, 0x100000))
+    assert b"RAMDisk" in blob
+    assert b"x0" not in blob  # sanity: no accidental textual address
