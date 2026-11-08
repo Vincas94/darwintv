@@ -115,10 +115,26 @@ loader:
 2. Receive `payload.bin` into `0x08000000`.
 3. Verify the magic and CRC, then boot it.
 
-At 115200 baud, 8N1, the theoretical throughput is ~11.5 KB/s, so a 15 MB kernel takes ~22
-minutes. A 512 KB test kernel takes ~45 seconds. At 921600 baud (if the adapter and PL011 clock
-allow it), the 15 MB kernel is ~2.7 minutes. This is the "no SD card at all" loop for kernel
-bring-up; use the FAT copy for full builds.
+The Pi 5 debug UART's reference clock is **9.216 MHz** (`clk_uart` in the BCM2712 DTS). The
+PL011 uses 16× oversampling, so the hardware ceiling is **9.216 MHz / 16 = 576000 baud**. There is
+no 921600/3 Mbaud mode on this UART.
+
+At 8N1, the useful throughput is about 10 bits per byte:
+
+| Payload | 115200 | 460800 | 576000 |
+|---|---|---|---|
+| 512 KB test kernel | ~45 s | ~11 s | ~9 s |
+| 15 MB full kernel | ~22 min | ~5.5 min | ~4.4 min |
+
+115200 is the firmware default and the safest starting point. 460800 is a good practical target
+(most FTDI/CP210x/CH340 adapters support it). 576000 is the hardware maximum and is a
+non-standard rate; check that your adapter and host `termios` support it.
+
+The loader must program `IBRD`/`FBRD` for a higher rate; the M1 loader deliberately leaves the
+firmware's 115200 alone. Add a baud-switch command or a compile-time `UART_BAUD` in M2.
+
+This is the "no SD card at all" loop for kernel bring-up; use the FAT copy for full builds and
+never use UART for the 3.6 GB root image.
 
 ## 5. A/B slots and safe updates
 

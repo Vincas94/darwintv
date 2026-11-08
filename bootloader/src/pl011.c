@@ -26,6 +26,38 @@ void pl011_init(uintptr_t base)
 	mmio_write32(base, PL011_CR, PL011_CR_UARTEN | PL011_CR_TXE | PL011_CR_RXE);
 }
 
+void pl011_set_baud(uintptr_t base, uint32_t uartclk, uint32_t baud)
+{
+	uint32_t div64 = (uartclk * 4u + baud / 2u) / baud;
+	uint32_t ibrd = div64 / 64u;
+	uint32_t fbrd = div64 % 64u;
+	uint32_t cr = mmio_read32(base, PL011_CR);
+
+	mmio_write32(base, PL011_CR, cr & ~PL011_CR_UARTEN);
+	mmio_write32(base, PL011_IBRD, ibrd);
+	mmio_write32(base, PL011_FBRD, fbrd);
+	mmio_write32(base, PL011_LCRH, PL011_LCRH_WLEN_8 | PL011_LCRH_FEN);
+	mmio_write32(base, PL011_CR, cr | PL011_CR_UARTEN | PL011_CR_TXE | PL011_CR_RXE);
+}
+
+int pl011_rx_ready(uintptr_t base)
+{
+	return (mmio_read32(base, PL011_FR) & PL011_FR_RXFE) == 0;
+}
+
+char pl011_getc(uintptr_t base)
+{
+	uint32_t dr;
+
+	while (pl011_rx_ready(base) == 0) {
+	}
+	dr = mmio_read32(base, PL011_DR);
+	if ((dr & PL011_DR_ERR_MASK) != 0) {
+		mmio_write32(base, PL011_ECR, 0);
+	}
+	return (char)(dr & 0xffu);
+}
+
 void pl011_putc(uintptr_t base, char c)
 {
 	while ((mmio_read32(base, PL011_FR) & PL011_FR_TXFF) != 0) {

@@ -46,6 +46,27 @@ JST-SH connector** between the microHDMI ports. It is **3.3 V only**.
 - **Do not connect VCC/3.3 V/5 V.**
 - **115200 baud, 8 data bits, 1 stop bit, no parity, no flow control.**
 - `picocom -b 115200 /dev/ttyUSB0` or `minicom -b 115200 -D /dev/ttyUSB0`.
+- The debug connector has **no RTS/CTS**, so high-speed transfers must use a protocol with
+  per-block acknowledgement (XMODEM/YMODEM), not hardware flow control.
+
+### UART clock and maximum baud
+
+The BCM2712 DTS gives the debug UART a **9.216 MHz** reference clock (`clk_uart`). The PL011
+uses 16× oversampling, so:
+
+```text
+max baud = 9_216_000 / 16 = 576_000
+```
+
+| Baud | Divisor (`IBRD`/`FBRD`) | Note |
+|---|---|---|
+| 115200 | 5 / 0 | firmware default |
+| 230400 | 2 / 32 | |
+| 460800 | 1 / 16 | good practical target |
+| 576000 | 1 / 0 | hardware maximum |
+
+There is no 921600 or 3 Mbaud mode on this UART. The loader must program `IBRD`/`FBRD` before
+using a higher rate; the M1 loader leaves the firmware's 115200 in place.
 
 To see firmware logs:
 
