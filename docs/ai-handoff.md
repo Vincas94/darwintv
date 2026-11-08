@@ -15,8 +15,9 @@ breaking the project.
 
 ## Current state in one paragraph
 
-The host tools, docs, CI, and a freestanding M1 loader exist. The loader prints a banner on the
-PL011 and spins; it does not parse the FDT, load a payload, build `boot_args`, or jump to XNU.
+The host tools, docs, CI, and a freestanding M1 loader exist. The loader prints a banner, saves
+the firmware DTB pointer, and validates/prints `payload.bin`; it does not parse `/memory`, copy the
+segments, build `boot_args`, or jump to XNU yet.
 No XNU patch, build, or Pi 5 run exists yet. The immediate milestone is M2: payload format +
 loader handoff + XNU board config/platform expert.
 

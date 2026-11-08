@@ -19,11 +19,18 @@ The loader deliberately does **not** touch `IBRD`/`FBRD`: the firmware has
 already configured 115200 8N1, and the BCM2712 UART reference clock is not yet
 modelled here.
 
-## Next step (M2)
+## Current M2 state
 
-Replace the final `wfe` loop with:
+The loader now:
 
-1. parse the firmware FDT (`/memory`) passed in `x0`,
-2. copy the XNU Mach-O to `0x02004000`,
-3. build the ADT and `boot_args` behind the kernel,
-4. jump to the XNU entry with `x0 = boot_args` at EL1.
+1. saves the firmware DTB pointer (`x0`) in `x19` and prints it,
+2. validates `payload.bin` at `PAYLOAD_ADDR` (magic, version, bounds, CRC32),
+3. prints the entry, bases, segments and command line,
+4. spins.
+
+Next:
+
+1. parse `/memory` from the firmware FDT,
+2. copy the payload segments to `phys_base + (vmaddr - virt_base)`,
+3. build `boot_args` behind the ADT,
+4. jump to the entry with `x0 = boot_args` at EL1.

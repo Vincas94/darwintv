@@ -90,3 +90,11 @@ mark the confidence; do not leave it only in a chat or a code comment.
 - `ipsw.me` device data: <https://api.ipsw.me/v4/device/AppleTV5,3?type=ipsw>
 - Pi 5 network boot / EEPROM: <https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#raspberry-pi-bootloader-configuration>
 - `config.txt`: <https://www.raspberrypi.com/documentation/computers/config_txt.html>
+
+## Project format facts
+
+| Fact | Value | Source | Confidence |
+|---|---|---|---|
+| Payload magic/version | `DTVPLD01`, version 1 | `tools/payload/payload.py`, `bootloader/include/payload.h` | A |
+| Payload header | 128 bytes, CRC32 over the file with the CRC field zeroed | `tools/payload/payload.py` | A |
+| Payload segment entry | 40 bytes: file offset/size, vmaddr/vmsize, reserved | same | A |

@@ -14,6 +14,9 @@
 .type _start, %function
 
 _start:
+    /* The firmware passes the DTB in x0; keep it in a callee-saved register. */
+    mov x19, x0
+
     /* Park every core except CPU 0 (MPIDR_EL1.Aff0). */
     mrs x0, mpidr_el1
     and x0, x0, #0xff
@@ -79,6 +82,7 @@ _start:
     b 4b
 
 5:
+    mov x0, x19
     bl loader_main
 
 6:

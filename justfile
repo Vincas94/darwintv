@@ -38,6 +38,9 @@ xnu-fetch:
 xnu-patches:
     ./scripts/apply-patches.sh
 
+payload kernel="build/kernel.development.bcm2712":
+    ./scripts/mkpayload.sh {{kernel}}
+
 clean:
     make -C bootloader clean
     rm -rf site .pytest_cache .ruff_cache .mypy_cache

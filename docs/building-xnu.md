@@ -61,15 +61,28 @@ validates that the patch series applies on Linux.
 
 ## Step 4 — pack a payload
 
-The loader expects a `payload.bin` (M2):
+The loader expects a `payload.bin`:
 
 ```text
-magic | version | payload length | CRC32 | kernel Mach-O | ADT | boot args
+header (128 B: magic, version, totals, entry, virt/phys base, mem size,
+        ADT/cmdline offsets, nsegs, CRC32)
+segment table (nsegs × 40 B)
+ADT (aligned 16)
+command line (aligned 16, NUL-terminated)
+segment data (aligned 16)
 ```
 
-The packer (`tools/payload/`, planned) copies the Mach-O segments, records the entry, and appends
-the ADT and command line. The loader copies the segments to `0x02004000`, builds `boot_args`, and
-jumps.
+`tools/payload` is implemented and tested:
+
+```sh
+scripts/mkpayload.sh path/to/kernel.development.bcm2712
+# or:
+python -m tools.payload pack --kernel ... --out build/payload.bin
+python -m tools.payload info build/payload.bin
+```
+
+The loader validates the magic/CRC, prints the payload, and (next M2 step) copies the segments to
+`0x02004000`, builds `boot_args`, and jumps.
 
 ## Step 5 — boot
 

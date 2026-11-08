@@ -92,6 +92,7 @@ The boot partition is FAT32 and the loader/payload are files. Kernel updates are
 | `patches/` | `git format-patch` series applied to the pinned XNU tree |
 | `tools/adt/` | Apple Device Tree writer used by the loader and tests |
 | `tools/ipsw/` | Local IPSW listing/extraction helpers |
+| `tools/payload/` | Payload packer/inspector and the loader-side format |
 | `tools/rootfs/` | Planned tvOS root-image pipeline |
 | `configs/` | `config.txt`, QEMU and Pi 5 boot configuration |
 | `docs/` | Hardware, boot flow, tvOS, research notes and ADRs |

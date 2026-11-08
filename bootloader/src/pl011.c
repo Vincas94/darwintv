@@ -65,6 +65,18 @@ void pl011_putc(uintptr_t base, char c)
 	mmio_write32(base, PL011_DR, (uint8_t)c);
 }
 
+void pl011_put_hex(uintptr_t base, uintptr_t value)
+{
+	static const char digits[] = "0123456789abcdef";
+	unsigned int i;
+
+	pl011_puts(base, "0x");
+	for (i = 0; i < sizeof(uintptr_t) * 2; i++) {
+		unsigned int shift = (unsigned int)(sizeof(uintptr_t) * 8 - 4 - i * 4);
+		pl011_putc(base, digits[(value >> shift) & 0xfu]);
+	}
+}
+
 void pl011_puts(uintptr_t base, const char *s)
 {
 	while (*s != '\0') {

@@ -12,11 +12,12 @@ from what is assumed, and lists what is blocked on hardware.
 
 | Item | State | Evidence |
 |---|---|---|
-| Host tooling | works | `pytest` (12 tests), `ruff`, `shellcheck`, `clang-format`, `mkdocs --strict` |
+| Host tooling | works | `pytest` (18 tests), `ruff`, `shellcheck`, `clang-format`, `mkdocs --strict` |
 | ADT writer | works on the host | `tools/adt/adt.py`, tests; not yet consumed by XNU |
 | IPSW listing/extraction | works on local ZIPs | `tools/ipsw/extract.py`, tests |
-| M1 loader | builds | `make loader BOARD=pi5` and `BOARD=qemu-raspi4b`; ~1.6 KB raw image |
+| M1 loader | builds | `make loader BOARD=pi5`, `qemu-raspi4b`, `qemu-virt`; ~3.3 KB raw image |
 | M1 loader on hardware | **not run** | no Pi 5 boot or QEMU run in this workspace |
+| Payload packer/validator | works | `tools/payload`, 6 tests; `payload.bin` round-trips |
 | XNU patches | none yet | `patches/` is empty; `docs/patches.md` is the plan |
 | XNU build | not attempted | needs macOS/Xcode; `docs/building-xnu.md` |
 | tvOS IPSW extraction | researched, not automated | `docs/ipsw.md`; `OS`/DeviceTree roles verified from the ZIP |
@@ -30,9 +31,9 @@ from what is assumed, and lists what is blocked on hardware.
 - No XNU source tree is pinned/fetched in this workspace (`third_party/xnu` is empty).
 - No `patches/0001-*.patch` exists.
 - No XNU kernel has been built for BCM2712.
-- No payload packer (`tools/payload`) exists yet; M2.
-- The loader prints a banner and spins; it does not parse the FDT, load a payload, build
-  `boot_args`, or jump to XNU.
+- The loader validates and prints a payload, but does not copy the segments or jump yet (M2).
+- The loader prints a banner, preserves the DTB pointer, and validates/prints a payload; it does
+  not parse `/memory`, copy segments, build `boot_args`, or jump to XNU yet.
 - No SDHCI, HFS+, framebuffer, HID or RP1 driver.
 - No tvOS root image or `PineBoard` run.
 
@@ -50,8 +51,8 @@ from what is assumed, and lists what is blocked on hardware.
 
 1. **M1 on hardware:** flash/copy `loader8.img`, capture the banner at 115200.
 2. **Fact pass:** replace every `C` confidence row in `docs/facts.md` that the board can answer.
-3. **M2 payload:** define `payload.bin` (magic, length, CRC, Mach-O, ADT, boot args).
-4. **M2 loader:** FDT `/memory`, copy segments to `0x02004000`, ADT + `boot_args`, EL1 jump.
+3. **M2 loader:** parse the firmware `/memory`, copy payload segments to `0x02004000`, build
+   `boot_args` from the embedded ADT, and jump to XNU.
 5. **XNU build:** pin `xnu-8796.141.3`, add the BCM2712 board config and platform expert.
 
 ## Confidence legend

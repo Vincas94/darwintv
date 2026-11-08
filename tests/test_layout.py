@@ -29,6 +29,8 @@ REQUIRED = [
     "patches/README.md",
     "tools/adt/adt.py",
     "tools/ipsw/extract.py",
+    "tools/payload/payload.py",
+    "scripts/mkpayload.sh",
     "tools/rootfs/README.md",
 ]
 

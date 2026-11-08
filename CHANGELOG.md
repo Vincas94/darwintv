@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Status, canonical facts, open questions, AI handoff, XNU build, IPSW, patch, glossary,
   test-rig, safety and CI docs.
 - `qemu-virt` loader target; anchored `.gitignore` so `tools/ipsw` and `tools/rootfs` are tracked.
+- Payload format, packer/inspector (`tools/payload`), 6 tests, and loader-side CRC/bounds validation.
 
 ## [0.0.1] - 2026-11-08
 

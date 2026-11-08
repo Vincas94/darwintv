@@ -29,6 +29,7 @@
 void pl011_init(uintptr_t base);
 void pl011_set_baud(uintptr_t base, uint32_t uartclk, uint32_t baud);
 void pl011_putc(uintptr_t base, char c);
+void pl011_put_hex(uintptr_t base, uintptr_t value);
 int pl011_rx_ready(uintptr_t base);
 char pl011_getc(uintptr_t base);
 void pl011_puts(uintptr_t base, const char *s);

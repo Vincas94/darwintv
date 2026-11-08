@@ -30,7 +30,7 @@ CFLAGS := -std=c11 -O2 -g -Wall -Wextra -Werror -ffreestanding \
 LDFLAGS := -T linker.ld -nostdlib -nostartfiles -Wl,--build-id=none \
            -Wl,--no-warn-rwx-segments -Wl,--defsym=LOAD_ADDR=$(LOAD_ADDR)
 
-SRCS := src/start.S src/main.c src/pl011.c
+SRCS := src/start.S src/main.c src/pl011.c src/payload.c
 OBJS := $(patsubst src/%,$(BUILD)/%.o,$(SRCS))
 
 .PHONY: all clean

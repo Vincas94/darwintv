@@ -60,17 +60,14 @@ ramfsaddr=0x08000000
 uart_2ndstage=1
 ```
 
-`payload.bin` is the M2 packer's output: the XNU Mach-O, the ADT, and the boot arguments, with a
-magic header. The loader reads it from `0x08000000`, copies the segments, and jumps. Updating the
-kernel is then:
+`payload.bin` is `tools/payload`'s output: a 128-byte header (magic, size, entry, bases, CRC32),
+a segment table, the ADT, the command line and the Mach-O segment data. The loader validates it at
+`0x08000000`; M2 adds the segment copy and jump. Updating the kernel is then:
 
 ```sh
 # on the build host, after the macOS/GitHub Actions XNU build
-python -m tools.payload pack \
-    --kernel kernel.development.bcm2712 \
-    --adt build/pi5.adt \
-    --cmdline "debug=0xc serial=1 cpus=1 keepsyms=1 -noprogress" \
-    --out payload.bin
+scripts/mkpayload.sh kernel.development.bcm2712 \
+    --cmdline "debug=0xc serial=1 cpus=1 keepsyms=1 -noprogress"
 
 sudo mount /dev/sdX1 /mnt/boot
 sudo cp payload.bin /mnt/boot/

@@ -1,39 +1,36 @@
 #include "board.h"
+#include "payload.h"
 #include "pl011.h"
 
 #include <stdint.h>
 
-static void put_hex(uintptr_t value)
+void loader_main(uint64_t dtb)
 {
-	static const char digits[] = "0123456789abcdef";
-	char buffer[2 + sizeof(uintptr_t) * 2];
-	unsigned int i;
+	struct payload_info info;
 
-	buffer[0] = '0';
-	buffer[1] = 'x';
-	for (i = 0; i < sizeof(uintptr_t) * 2; i++) {
-		unsigned int shift = (unsigned int)(sizeof(uintptr_t) * 8 - 4 - i * 4);
-		buffer[2 + i] = digits[(value >> shift) & 0xfu];
-	}
-	for (i = 0; i < sizeof(buffer); i++) {
-		pl011_putc(PL011_BASE, buffer[i]);
-	}
-}
-
-void loader_main(void)
-{
 	pl011_init(PL011_BASE);
 
 	pl011_puts(PL011_BASE, "\n");
 	pl011_puts(PL011_BASE, "DarwinTV loader\n");
-	pl011_puts(PL011_BASE, "board:  " BOARD_NAME "\n");
-	pl011_puts(PL011_BASE, "load:   ");
-	put_hex((uintptr_t)LOAD_ADDR);
+	pl011_puts(PL011_BASE, "board:   " BOARD_NAME "\n");
+	pl011_puts(PL011_BASE, "load:    ");
+	pl011_put_hex(PL011_BASE, (uintptr_t)LOAD_ADDR);
 	pl011_puts(PL011_BASE, "\n");
-	pl011_puts(PL011_BASE, "uart:   ");
-	put_hex((uintptr_t)PL011_BASE);
+	pl011_puts(PL011_BASE, "uart:    ");
+	pl011_put_hex(PL011_BASE, (uintptr_t)PL011_BASE);
 	pl011_puts(PL011_BASE, "\n");
-	pl011_puts(PL011_BASE, "hello from the other side of the SoC\n");
+	pl011_puts(PL011_BASE, "dtb:     ");
+	pl011_put_hex(PL011_BASE, (uintptr_t)dtb);
+	pl011_puts(PL011_BASE, "\n");
+
+	if (payload_validate((const void *)PAYLOAD_ADDR, PAYLOAD_MAX_SIZE, &info)) {
+		payload_print(&info);
+		pl011_puts(PL011_BASE, "payload valid; copy/jump is the next M2 step\n");
+	} else {
+		pl011_puts(PL011_BASE, "no valid payload at ");
+		pl011_put_hex(PL011_BASE, (uintptr_t)PAYLOAD_ADDR);
+		pl011_puts(PL011_BASE, "\n");
+	}
 
 	for (;;) {
 		__asm__ volatile("wfe");

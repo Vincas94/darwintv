@@ -3,8 +3,9 @@ SHELL := /bin/bash
 
 BOARD ?= pi5
 XNU_VERSION ?= xnu-8796.141.3
+KERNEL ?= build/kernel.development.bcm2712
 
-.PHONY: help bootstrap check lint test fmt docs loader qemu xnu-fetch xnu-patches netboot hw-smoke clean
+.PHONY: help bootstrap check lint test fmt docs loader qemu xnu-fetch xnu-patches netboot payload hw-smoke clean
 
 help:
 	@echo "DarwinTV"
@@ -51,6 +52,9 @@ xnu-fetch:
 
 xnu-patches:
 	./scripts/apply-patches.sh
+
+payload:
+	./scripts/mkpayload.sh $(KERNEL)
 
 netboot:
 	./scripts/make-netboot-dir.sh
