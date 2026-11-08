@@ -45,7 +45,7 @@ JST-SH connector** between the microHDMI ports. It is **3.3 V only**.
 
 - **Do not connect VCC/3.3 V/5 V.**
 - **115200 baud, 8 data bits, 1 stop bit, no parity, no flow control.**
-- `picocom -b 115200 /dev/ttyUSB0` or `minicom -b 115200 -D /dev/ttyUSB0`.
+- `picocom -b 115200 /dev/ttyACM0` or `minicom -b 115200 -D /dev/ttyACM0`.
 - The debug connector has **no RTS/CTS**, so high-speed transfers must use a protocol with
   per-block acknowledgement (XMODEM/YMODEM), not hardware flow control.
 

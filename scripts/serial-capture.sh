@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SERIAL_DEV="${SERIAL_DEV:-/dev/ttyUSB0}"
+SERIAL_DEV="${SERIAL_DEV:-/dev/ttyACM0}"
 SERIAL_BAUD="${SERIAL_BAUD:-115200}"
 WAIT_FOR="${WAIT_FOR:-DarwinTV}"
 TIMEOUT="${TIMEOUT:-30}"

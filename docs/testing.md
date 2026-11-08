@@ -83,7 +83,7 @@ wrap the safe parts:
 
 ```sh
 export BOOT_MNT=/mnt/pi5-boot
-export SERIAL_DEV=/dev/ttyUSB0
+export SERIAL_DEV=/dev/ttyACM0
 export SERIAL_BAUD=460800
 export POWER_CMD="uhubctl -a cycle -p 1"     # or usbrelay / smart plug curl
 export WAIT_FOR="DarwinTV"

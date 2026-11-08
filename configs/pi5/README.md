@@ -14,8 +14,8 @@ The Pi 5 primary debug UART is **UART10**, a PL011 at `0x107d001000`, on the
 Do **not** connect VCC. Use 115200 8N1:
 
 ```sh
-picocom -b 115200 /dev/ttyUSB0
-# or: minicom -b 115200 -D /dev/ttyUSB0
+picocom -b 115200 /dev/ttyACM0
+# or: minicom -b 115200 -D /dev/ttyACM0
 ```
 
 ## 2. Show the firmware log

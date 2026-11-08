@@ -109,7 +109,7 @@ Run it, point the Pi at the PC's address, and use `BOOT_ORDER=0xf12`.
 ## 4. The loop
 
 ```sh
-export SERIAL_DEV=/dev/ttyUSB0
+export SERIAL_DEV=/dev/ttyACM0
 export SERIAL_BAUD=115200
 export POWER_CMD="uhubctl -a cycle -p 1"   # or usbrelay / smart plug
 export WAIT_FOR="DarwinTV"

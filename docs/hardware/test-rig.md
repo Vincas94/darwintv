@@ -7,24 +7,24 @@ Fill this in before hardware testing. An AI agent needs the actual values, not "
 | Item | Value |
 |---|---|
 | Model | Raspberry Pi 5 Model B |
-| RAM | `<4 / 8 / 16 GB>` |
-| Board revision | `<from /proc/cpuinfo or the silkscreen>` |
-| EEPROM/bootloader | `<rpi-eeprom-update output>` |
+| RAM | **8 GB** |
+| Board revision | **`d04171`** = Pi 5 rev 1.1, 8 GB, Sony UK |
+| EEPROM/bootloader | `<rpi-eeprom-update output — fill on first boot>` |
 | Power supply | `<official 5V/5A?>` |
 | Cooling | `<active cooler / heatsink>` |
-| Storage | `<microSD / NVMe / USB>` |
+| Storage | microSD (first boot from **TFTP**) |
 | Ethernet | `<1 Gbps, same switch as host>` |
 
 ## Serial
 
 | Item | Value |
 |---|---|
-| Adapter | `<model>` |
-| Chip | `<FT232 / CP210x / CH340 / RP2040>` |
-| Max baud | `<from datasheet>` |
+| Adapter | **Raspberry Pi Debug Probe** |
+| Chip | RP2040 (Debug Probe) |
+| Max baud | 115200 verified; 460800/576000 to test |
 | Voltage | `3.3 V only` |
 | Connector | `3-pin JST-SH (UART10)` |
-| Host device | `/dev/ttyUSB0` |
+| Host device | **`/dev/ttyACM0`** (Debug Probe is CDC-ACM) |
 
 ## Power control
 
@@ -38,10 +38,10 @@ Fill this in before hardware testing. An AI agent needs the actual values, not "
 
 | Item | Value |
 |---|---|
-| OS | `<Linux distro/kernel>` |
+| OS | Linux (fill distro/kernel) |
 | CPU | `<x86_64 / Apple silicon>` |
-| QEMU | `<version, qemu-system-aarch64>` |
-| Cross compiler | `<aarch64-linux-gnu-gcc version>` |
+| QEMU | not installed in the current workspace; install `qemu-system-arm` |
+| Cross compiler | `aarch64-linux-gnu-gcc` 16.2.0 (current workspace) |
 | Python | `<version>` |
 | TFTP server | `<tftpd-hpa / dnsmasq>` |
 | TFTP root | `/srv/darwintv-tftp` |
@@ -50,10 +50,10 @@ Fill this in before hardware testing. An AI agent needs the actual values, not "
 
 | Item | Value |
 |---|---|
-| Host IP | `<192.168.x.x>` |
-| Pi IP | `<DHCP or static>` |
-| `BOOT_ORDER` | `0xf12` |
-| `TFTP_IP` | `<host IP>` |
+| Host IP | `<fill: ip route get 1.1.1.1>` |
+| Pi IP | DHCP (fill after first boot) |
+| `BOOT_ORDER` | `0xf12` (network, SD fallback, restart) |
+| `TFTP_IP` | `<fill: host IP>` |
 | `TFTP_PREFIX` | `1` |
 | `TFTP_PREFIX_STR` | `darwintv/` |
 

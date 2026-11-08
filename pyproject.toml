@@ -36,9 +36,9 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/OWNER/darwintv"
-Documentation = "https://github.com/OWNER/darwintv/tree/main/docs"
-Issues = "https://github.com/OWNER/darwintv/issues"
+Homepage = "https://github.com/Vincas94/darwintv"
+Documentation = "https://github.com/Vincas94/darwintv/tree/main/docs"
+Issues = "https://github.com/Vincas94/darwintv/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["tools"]

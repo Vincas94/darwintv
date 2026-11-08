@@ -1,6 +1,6 @@
 # Contributing
 
-The canonical guide is [`CONTRIBUTING.md`](https://github.com/OWNER/darwintv/blob/main/CONTRIBUTING.md).
+The canonical guide is [`CONTRIBUTING.md`](https://github.com/Vincas94/darwintv/blob/main/CONTRIBUTING.md).
 
 Quick version:
 
@@ -17,4 +17,4 @@ make loader BOARD=pi5
 - New hardware facts need a source in [Raspberry Pi 5 hardware](hardware/pi5.md) or an ADR.
 - AI-assisted contributions are welcome when disclosed and understood.
 
-Read [`AGENTS.md`](https://github.com/OWNER/darwintv/blob/main/AGENTS.md) if you use an AI agent.
+Read [`AGENTS.md`](https://github.com/Vincas94/darwintv/blob/main/AGENTS.md) if you use an AI agent.

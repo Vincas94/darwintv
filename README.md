@@ -7,8 +7,7 @@
     <img alt="license" src="https://img.shields.io/badge/license-MIT-blue">
     <img alt="platform" src="https://img.shields.io/badge/platform-Raspberry%20Pi%205-c51a4a">
     <img alt="XNU" src="https://img.shields.io/badge/XNU-xnu--8796.141.3-lightgrey">
-    <!-- Replace OWNER after pushing to GitHub. -->
-    <!-- <a href="https://github.com/OWNER/darwintv/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/OWNER/darwintv/actions/workflows/ci.yml/badge.svg"></a> -->
+    <a href="https://github.com/Vincas94/darwintv/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Vincas94/darwintv/actions/workflows/ci.yml/badge.svg"></a>
   </p>
 </div>
 
@@ -65,7 +64,7 @@ BCM2712 boot ROM
 ## Quick start
 
 ```sh
-git clone https://github.com/OWNER/darwintv.git
+git clone https://github.com/Vincas94/darwintv.git
 cd darwintv
 
 ./scripts/bootstrap.sh

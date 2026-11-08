@@ -8,8 +8,8 @@ authors:
   - name: "DarwinTV contributors"
 type: software
 license: MIT
-repository-code: "https://github.com/OWNER/darwintv"
-url: "https://github.com/OWNER/darwintv"
+repository-code: "https://github.com/Vincas94/darwintv"
+url: "https://github.com/Vincas94/darwintv"
 keywords:
   - xnu
   - darwin

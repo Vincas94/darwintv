@@ -10,7 +10,7 @@
 ## 1. Bootstrap the host
 
 ```sh
-git clone https://github.com/OWNER/darwintv.git
+git clone https://github.com/Vincas94/darwintv.git
 cd darwintv
 ./scripts/bootstrap.sh
 source .venv/bin/activate
@@ -42,7 +42,7 @@ See [Raspberry Pi 5 hardware](hardware/pi5.md). The short version:
 **3.3 V only. Do not connect VCC.** 115200 8N1.
 
 ```sh
-picocom -b 115200 /dev/ttyUSB0
+picocom -b 115200 /dev/ttyACM0
 ```
 
 ## 4. Boot the Pi 5

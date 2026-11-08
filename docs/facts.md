@@ -9,6 +9,7 @@ mark the confidence; do not leave it only in a chat or a code comment.
 | Fact | Value | Source | Confidence |
 |---|---|---|---|
 | SoC | Broadcom BCM2712 | BCM2712 DTS `compatible = "brcm,bcm2712"` | A |
+| Board revision | `d04171` = Raspberry Pi 5 rev 1.1, 8 GB, Sony UK | Raspberry Pi revision-codes documentation | A (user-provided code + official table) |
 | CPU | 4× Cortex-A76, ARMv8.2-A, 2.4 GHz | BCM2712 DTS `cpu@0..3`, `arm,cortex-a76`; Raspberry Pi docs | A |
 | 16K translation granule | supported by A76; Pi 5 Linux uses `kernel_2712.img` with 16K pages | Raspberry Pi `config.txt` docs; ARM A76 TRM | A (CPU), B (XNU use) |
 | Interrupt controller | ARM GIC-400 (GICv2): GICD `0x10_7fff9000`, GICC `0x10_7fffa000` | BCM2712 DTS `interrupt-controller@7fff9000`, `compatible = "arm,gic-400"` | A (DTS), C (silicon revision) |

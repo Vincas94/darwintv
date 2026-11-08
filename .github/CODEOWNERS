@@ -1,7 +1,7 @@
-# Replace @OWNER with your GitHub handle before enabling branch protection.
-* @OWNER
+# Replace @Vincas94 with your GitHub handle before enabling branch protection.
+* @Vincas94
 
-/bootloader/ @OWNER
-/docs/ @OWNER
-/patches/ @OWNER
-/tools/ @OWNER
+/bootloader/ @Vincas94
+/docs/ @Vincas94
+/patches/ @Vincas94
+/tools/ @Vincas94

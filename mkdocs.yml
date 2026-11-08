@@ -1,8 +1,8 @@
 site_name: DarwinTV
 site_description: Apple TV's tvOS userland on a Raspberry Pi 5, via a from-source XNU port.
 site_url: https://OWNER.github.io/darwintv/
-repo_url: https://github.com/OWNER/darwintv
-repo_name: OWNER/darwintv
+repo_url: https://github.com/Vincas94/darwintv
+repo_name: Vincas94/darwintv
 copyright: Copyright &copy; 2026 DarwinTV contributors
 
 theme:
