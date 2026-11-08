@@ -74,7 +74,7 @@ The M1 loader does not read `payload.bin` yet; the network boot still proves the
 
 ```sh
 sudo apt-get install tftpd-hpa
-make publish-netboot
+TFTP_ROOT=/srv/darwintv-tftp make publish-netboot
 ```
 
 On Debian/Ubuntu, `/etc/default/tftpd-hpa`:
