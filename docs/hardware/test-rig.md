@@ -43,7 +43,7 @@ Fill this in before hardware testing. An AI agent needs the actual values, not "
 | QEMU | not installed in the current workspace; install `qemu-system-arm` |
 | Cross compiler | `aarch64-linux-gnu-gcc` 16.2.0 (current workspace) |
 | Python | `<version>` |
-| TFTP server | `tftp-hpa` (`tftpd.socket` active) |
+| TFTP server | `tftp-hpa` (`tftpd.service` active, enabled) |
 | TFTP root | `/srv/tftp` |
 
 ## Network boot

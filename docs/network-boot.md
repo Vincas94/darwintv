@@ -94,18 +94,19 @@ tftp localhost -c get darwintv/config.txt   # smoke test
 ### Current host (CachyOS/Arch)
 
 This host uses the Arch `tftp-hpa` package, which serves from `/srv/tftp/` via
-`tftpd.socket` and a dedicated `tftp` user:
+`tftpd.service` and a dedicated `tftp` user:
 
 ```sh
 sudo pacman -S tftp-hpa
 make publish-netboot
-sudo systemctl enable --now tftpd.socket
+sudo systemctl enable --now tftpd.service
 sudo ufw allow from 192.168.9.0/24 to any port 69 proto udp
 tftp 127.0.0.1 -c get darwintv/config.txt /tmp/tftp-test.txt
 ```
 
-The current host already has `tftpd.socket` active, `/srv/tftp/darwintv/` published,
-and the UFW rule in place.
+The current host runs `tftpd.service` (active, enabled), serves `/srv/tftp/darwintv/`,
+and has the UFW rule in place. The service config is
+`TFTPD_ARGS="--user tftp --secure /srv/tftp/"`.
 
 ### Option B: `dnsmasq` (DHCP + TFTP on the PC)
 
