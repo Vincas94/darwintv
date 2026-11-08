@@ -192,6 +192,7 @@ def build_payload(
     cmdline: str = "debug=0xc serial=1 cpus=1 keepsyms=1 -noprogress",
     adt: bytes | None = None,
     ramdisk: tuple[int, int] | None = None,
+    timebase: int = 54_000_000,
 ) -> tuple[bytes, PayloadHeader]:
     """Pack a kernel Mach-O, an ADT and a command line into payload.bin."""
     macho = parse_macho(kernel)
@@ -201,6 +202,7 @@ def build_payload(
             dram_base=phys_base,
             dram_size=mem_size,
             cmdline=cmdline,
+            timebase=timebase,
             ramdisk=ramdisk,
         )
     cmdline_bytes = cmdline.encode() + b"\0"
@@ -351,6 +353,7 @@ def main(argv: list[str] | None = None) -> int:
     pack.add_argument("--mem-size", type=lambda x: int(x, 0), default=0x0FE000000)
     pack.add_argument("--ramdisk-base", type=lambda x: int(x, 0))
     pack.add_argument("--ramdisk-size", type=lambda x: int(x, 0))
+    pack.add_argument("--timebase", type=lambda x: int(x, 0), default=54_000_000)
 
     info = sub.add_parser("info", help="validate and print a payload")
     info.add_argument("payload", type=Path)
@@ -376,6 +379,7 @@ def main(argv: list[str] | None = None) -> int:
         cmdline=args.cmdline,
         adt=adt,
         ramdisk=ramdisk,
+        timebase=args.timebase,
     )
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_bytes(blob)

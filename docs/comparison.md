@@ -8,7 +8,7 @@ complex and much harder to recover and automate.
 
 | Dimension | Pi 5 + Ethernet | Phone + fastboot |
 |---|---|---|
-| Load an image without flashing | TFTP, ~1 s / 15 MB | `fastboot boot`, USB, faster pipe |
+| Load an image without flashing | TFTP, unmeasured / 15 MB | `fastboot boot`, USB, faster pipe |
 | Unlock / secure boot | none by default | unlock, AVB, anti-rollback, vendor locks |
 | Boot chain | ROM → EEPROM → TF-A → kernel | PBL → XBL → ABL → hypervisor → kernel, AVB/DTBO/A-B |
 | Recovery from a bad image | EEPROM/`rpiboot`/SD; low risk | EDL/DFU; risk of brick, ARB, data loss |
@@ -25,7 +25,7 @@ complex and much harder to recover and automate.
 
 ## What fastboot is genuinely better at
 
-- **Raw transfer speed.** USB 3 beats TFTP for a 15 MB image, though both are seconds.
+- **Raw transfer speed.** USB 3 beats TFTP for a 15 MB image. The TFTP time is unmeasured; fastboot is the faster pipe.
 - **A mature "load to RAM" command.** `fastboot boot boot.img` is a well-defined way to run a
   custom image without touching storage.
 - **Existing bring-up.** `ios-sweet` and HakiOS have already solved the iOS userland, ADT identity,

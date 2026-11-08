@@ -1,3 +1,7 @@
+> **Post-review update (2026-11-08):** Where this survey conflicts with the
+> [review addendum](2026-11-08-review-addendum.md) or `docs/facts.md`, those win. The addendum
+> covers Apple's in-tree BCM2837 support and the newer `xnu-on-pi` BCM2712 branch.
+
 > **Provenance.** This is the initial survey that motivated DarwinTV, written on
 > 2026-11-08 before the repository existed. It is kept verbatim (minor formatting
 > only) so later decisions can be traced back to their sources.

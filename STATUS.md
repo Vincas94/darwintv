@@ -12,10 +12,10 @@ from what is assumed, and lists what is blocked on hardware.
 
 | Item | State | Evidence |
 |---|---|---|
-| Host tooling | works | `pytest` (18 tests), `ruff`, `shellcheck`, `clang-format`, `mkdocs --strict` |
+| Host tooling | works | `pytest` (19 tests), `ruff`, `shellcheck`, `clang-format`, `mkdocs --strict` |
 | ADT writer | works on the host | `tools/adt/adt.py`, tests; not yet consumed by XNU |
 | IPSW listing/extraction | works on local ZIPs | `tools/ipsw/extract.py`, tests |
-| M1 loader | builds | `make loader BOARD=pi5`, `qemu-raspi4b`, `qemu-virt`; ~3.3 KB raw image |
+| M1 loader | builds | `make loader BOARD=pi5`, `qemu-raspi4b`, `qemu-virt`; ~9.1 KB raw image (vectors + payload validator) |
 | M1 loader on QEMU | **verified** | `raspi4b` (local QEMU 11) and `virt` (CI) boot the banner; payload validator prints a synthetic payload |
 | M1 loader on hardware | **not run** | no Pi 5 boot yet |
 | Payload packer/validator | works | `tools/payload`, 6 tests; `payload.bin` round-trips |
@@ -23,9 +23,11 @@ from what is assumed, and lists what is blocked on hardware.
 | XNU build | not attempted | needs macOS/Xcode; `docs/building-xnu.md` |
 | tvOS IPSW extraction | researched, not automated | `docs/ipsw.md`; `OS`/DeviceTree roles verified from the ZIP |
 | tvOS root image | not built | `tools/rootfs/README.md` is the plan; `scripts/make-rootfs.sh` exits 2 |
-| Pi 5 network boot | documented, not tested | `docs/network-boot.md`; EEPROM `BOOT_ORDER=0xf12` |
+| Pi 5 network boot | host ready, not hardware-tested | `docs/network-boot.md`; `tftpd.service`; EEPROM `BOOT_ORDER=0xf12` |
+| TFTP DTB | fetched and verified | `make fetch-dtb`; blob `30c8179…`; published with `make netboot` |
 | Hardware facts | catalogued with confidence | `docs/facts.md` — read the confidence column |
 | Open research | listed | `docs/open-questions.md` |
+| Prior-art/plan review | recorded | BCM2837 support and the newer BCM2712 branch in `docs/facts.md`, ADR 0009, and the [review addendum](https://github.com/Vincas94/darwintv/blob/main/docs/research/2026-11-08-review-addendum.md) |
 
 ## What is not done
 
@@ -41,20 +43,22 @@ from what is assumed, and lists what is blocked on hardware.
 ## Blocked on the UART cable / hardware
 
 1. Confirm the Pi 5 debug UART clock and usable baud rates on the actual board.
-2. Confirm the adapter's maximum baud and signal integrity at 460800/576000.
-3. Dump the firmware FDT (`/memory`, `/reserved-memory`) to replace the placeholder memory map.
+2. Confirm the Debug Probe's maximum reliable baud and signal integrity at 460800/576000.
+3. Dump the firmware FDT (`/memory`, `/reserved-memory`) and read `CNTFRQ_EL0` to replace the
+   placeholder memory/timer values.
 4. Read `GICD_PIDR2`, `GICD_TYPER`, `GICC_IIDR` to confirm the GIC-400 revision.
-5. Confirm which SDHCI (`sdio1` vs `sdio2`) is the microSD slot.
-6. Confirm the EEPROM network-boot TFTP file flow on the Pi 5 firmware revision.
-7. Run the M1 loader on the Pi 5 and capture the banner.
+5. Confirm the EEPROM network-boot TFTP file flow, including the DTB, on the Pi 5 firmware.
+6. Run the M1 loader on the Pi 5 and capture the banner.
 
 ## Immediate task queue
 
-1. **M1 on hardware:** flash/copy `loader8.img`, capture the banner at 115200.
+1. **M1 on hardware:** TFTP-boot `loader8.img`, capture the banner at 115200, record the DTB
+   pointer and `CNTFRQ_EL0`.
 2. **Fact pass:** replace every `C` confidence row in `docs/facts.md` that the board can answer.
 3. **M2 loader:** parse the firmware `/memory`, copy payload segments to `0x02004000`, build
    `boot_args` from the embedded ADT, and jump to XNU.
-5. **XNU build:** pin `xnu-8796.141.3`, add the BCM2712 board config and platform expert.
+4. **XNU build:** pin `xnu-8796.141.3`, base the BCM2712 board config on Apple's BCM2837 port,
+   and add the platform expert/GICv2 path (ADR 0009).
 
 ## Confidence legend
 

@@ -20,6 +20,10 @@
 | Looking for the next task | [`docs/open-questions.md`](docs/open-questions.md) |
 | An AI agent | [`AGENTS.md`](AGENTS.md) + [`docs/ai-handoff.md`](docs/ai-handoff.md) |
 
+> **AI-assisted, not hardware-tested.** The code and documentation were produced with AI
+> assistance. No part of DarwinTV has been run on a Raspberry Pi 5 yet. Treat every hardware
+> claim as provisional until it is recorded in `docs/facts.md` with confidence `A`.
+
 > **Status: pre-alpha research.** There is no working Pi 5 port yet. The first milestone is
 > XNU printing its banner on the Pi 5 debug UART. The long-term target is the unmodified
 > tvOS 16 `PineBoard` userland on a Raspberry Pi 5.
@@ -32,7 +36,7 @@ payload. It is the natural next step after:
 
 - [`ios-sweet`](https://github.com/dipa-studio/ios-sweet) — iOS 16 on a Redmi Note 10 Pro,
 - [HakiOS](https://github.com/oosexgang/hakios-xnu-kernel) — XNU on a POCO X5 Pro,
-- [`xnu-on-pi`](https://github.com/tansanrao/xnu-on-pi) — XNU on a Raspberry Pi 4.
+- [`xnu-on-pi`](https://github.com/tansanrao/xnu-on-pi) — XNU on a Raspberry Pi 4, with a newer BCM2712 branch.
 
 ## What this is not
 

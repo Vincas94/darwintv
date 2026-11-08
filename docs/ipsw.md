@@ -8,7 +8,23 @@ No Apple firmware is committed. Download the IPSW yourself and keep it outside t
 AppleTV5,3_16.6_20M73_Restore.ipsw
 ```
 
-Verify the SHA1 from the Apple Wiki or `ipsw.me` before using it.
+Verify the hashes before using it:
+
+```text
+SHA1    51da650aa4858042c0a6d7bb85674e304114a3d0
+SHA256  dc1bac6533e61f92cf98a2b29507088d385d823e9764ab0bffc7a02b08b6cdc4
+```
+
+```sh
+sha1sum "$IPSW_PATH"
+sha256sum "$IPSW_PATH"
+# or, with the expected values:
+python -m tools.ipsw verify "$IPSW_PATH" \
+  --sha1 51da650aa4858042c0a6d7bb85674e304114a3d0 \
+  --sha256 dc1bac6533e61f92cf98a2b29507088d385d823e9764ab0bffc7a02b08b6cdc4
+```
+
+Both are listed by `ipsw.me` for AppleTV5,3 16.6 (20M73).
 
 ## Roles (verified from the ZIP central directory and BuildManifest)
 

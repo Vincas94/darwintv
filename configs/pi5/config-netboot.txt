@@ -1,7 +1,6 @@
 # DarwinTV — Raspberry Pi 5 network-boot config.
 # Served by TFTP as darwintv/config.txt.
 
-arm_64bit=1
 kernel=kernel8.img
 kernel_address=0x200000
 

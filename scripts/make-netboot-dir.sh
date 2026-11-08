@@ -22,6 +22,15 @@ else
     echo "note: no payload at $PAYLOAD yet; serving the M1-only config"
 fi
 
+# The firmware normally loads bcm2712-rpi-5-b.dtb from the boot files. This is
+# unverified on Pi 5 TFTP firmware; copy it if the user supplied it.
+DTB="${DTB:-$ROOT/build/bcm2712-rpi-5-b.dtb}"
+if [ -f "$DTB" ]; then
+    cp "$DTB" "$OUT/bcm2712-rpi-5-b.dtb"
+else
+    echo "note: no DTB at $DTB; copy bcm2712-rpi-5-b.dtb there if your firmware needs it"
+fi
+
 chmod -R a+rX "$ROOT/build/netboot"
 echo "==> TFTP tree: $ROOT/build/netboot"
 echo "    serve it with tftpd-hpa from /srv/darwintv-tftp,"

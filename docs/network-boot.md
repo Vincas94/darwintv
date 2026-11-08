@@ -29,8 +29,10 @@ then SD, then loops.
 
 - `TFTP_IP` is the **build host's** address. It overrides the DHCP server address, so you can keep
   your router as DHCP and run `tftpd-hpa` on the PC.
-- `TFTP_PREFIX=1` + `TFTP_PREFIX_STR=darwintv/` keeps the files in a fixed directory. If your
-  firmware ignores the prefix, put the files at the TFTP root and set `TFTP_PREFIX=0`.
+- `TFTP_PREFIX=1` + `TFTP_PREFIX_STR=darwintv/` keeps the files in a fixed directory.
+- `TFTP_PREFIX=0` is the default and prefixes the request with the **board serial number**, not
+  the TFTP root. `2` uses the MAC address. If the prefixed file is not found, the firmware may
+  clear the prefix and retry the root (verify on your firmware revision).
 - `BOOT_UART=1` prints the bootloader log on the debug UART.
 
 Apply and reboot:
@@ -47,14 +49,14 @@ Verify with `sudo rpi-eeprom-config`.
 
 ```sh
 make loader BOARD=pi5
+make fetch-dtb
 make netboot
-# -> build/netboot/darwintv/{config.txt,kernel8.img,payload.bin}
+# -> build/netboot/darwintv/{config.txt,kernel8.img,payload.bin,bcm2712-rpi-5-b.dtb?}
 ```
 
-`configs/pi5/config-netboot.txt` is used as `config.txt` when a payload exists; the first M1 boot uses `configs/pi5/config-netboot-nopayload.txt` (no `ramfsfile`), so the firmware does not look for a missing payload.
+`configs/pi5/config-netboot.txt` is used as `config.txt` when a payload exists; the first M1 boot uses `configs/pi5/config-netboot-nopayload.txt` (no `ramfsfile`), so the firmware does not look for a missing payload. The firmware normally loads `bcm2712-rpi-5-b.dtb`; `make fetch-dtb` downloads `bcm2712-rpi-5-b.dtb` from the Raspberry Pi firmware repository and verifies its git blob SHA; `make netboot` includes it. This is unverified on Pi 5 firmware.
 
 ```ini
-arm_64bit=1
 kernel=kernel8.img
 kernel_address=0x200000
 ramfsfile=payload.bin
@@ -130,14 +132,16 @@ export POWER_CMD="uhubctl -a cycle -p 1"   # or usbrelay / smart plug
 export WAIT_FOR="DarwinTV"
 
 make loader BOARD=pi5
+make fetch-dtb
 make netboot
 make publish-netboot   # or rsync
 ./scripts/power-cycle.sh
 ./scripts/serial-capture.sh
 ```
 
-With a 1 Gbps link, a 15 MB `payload.bin` is ~1 second; the boot to the serial banner is ~1–3
-seconds. The SD card is only a fallback.
+TFTP is a stop-and-wait protocol, so the transfer is **not** line-rate. The 15 MB payload time
+has not been measured on this Pi/firmware; treat any "about one second" claim as unverified and
+record the measured time in `docs/facts.md` after the first boot. The SD card is only a fallback.
 
 ## 5. Troubleshooting
 

@@ -52,7 +52,6 @@ with `ramfsfile`/`ramfsaddr` (or `initramfs`):
 
 ```ini
 # config.txt
-arm_64bit=1
 kernel=loader8.img
 kernel_address=0x200000
 ramfsfile=payload.bin

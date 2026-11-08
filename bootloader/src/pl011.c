@@ -19,6 +19,8 @@ void pl011_init(uintptr_t base)
 	 * touch IBRD/FBRD until the BCM2712 clock tree is known: reprogramming the
 	 * divisor with the wrong reference clock produces garbage.
 	 */
+	while ((mmio_read32(base, PL011_FR) & PL011_FR_BUSY) != 0) {
+	}
 	mmio_write32(base, PL011_CR, 0);
 	mmio_write32(base, PL011_LCRH, PL011_LCRH_WLEN_8 | PL011_LCRH_FEN);
 	mmio_write32(base, PL011_IMSC, 0);
@@ -73,6 +75,18 @@ void pl011_put_hex(uintptr_t base, uintptr_t value)
 	pl011_puts(base, "0x");
 	for (i = 0; i < sizeof(uintptr_t) * 2; i++) {
 		unsigned int shift = (unsigned int)(sizeof(uintptr_t) * 8 - 4 - i * 4);
+		pl011_putc(base, digits[(value >> shift) & 0xfu]);
+	}
+}
+
+void pl011_put_hex32(uintptr_t base, uint32_t value)
+{
+	static const char digits[] = "0123456789abcdef";
+	unsigned int i;
+
+	pl011_puts(base, "0x");
+	for (i = 0; i < 8; i++) {
+		unsigned int shift = 28u - i * 4u;
 		pl011_putc(base, digits[(value >> shift) & 0xfu]);
 	}
 }

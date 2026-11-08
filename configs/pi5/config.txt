@@ -4,7 +4,6 @@
 # The Pi 5 firmware loads the raw AArch64 image at 0x200000 and passes the
 # firmware DTB address in x0.
 
-arm_64bit=1
 kernel=loader8.img
 kernel_address=0x200000
 

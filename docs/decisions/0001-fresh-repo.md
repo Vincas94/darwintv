@@ -10,7 +10,7 @@ There are three relevant upstreams:
 
 - `apple-oss-distributions/xnu` — the kernel itself (APSL-2.0, ~175 MB tree).
 - `tansanrao/xnu-on-pi` — a Raspberry Pi 4 loader/research project.
-- `tansanrao/xnu` — an XNU fork with branches `rpi4b-bringup` and `xnu-on-pi5`.
+- `tansanrao/xnu` — an XNU fork with branches `rpi4b-bringup`, `xnu-on-pi5` (older RPI4) and `xnu-on-pi` (newer BCM2712).
 - `ios-sweet` and HakiOS — phone ports with mature userland bring-up notes.
 
 Forking one of them would make that project's scope, history and release process the center of
@@ -36,7 +36,8 @@ and a documented patch series.
 
 ## Alternatives considered
 
-- **Fork `xnu-on-pi`:** rejected; it centers a Pi 4 loader and has no tvOS scope.
+- **Fork `xnu-on-pi`:** rejected; it is a loader/research project and has no tvOS
+  scope. Its newer BCM2712 branch is a reference only (ADR 0009).
 - **Fork `tansanrao/xnu` as the main repo:** rejected; a 175 MB fork hides the loader, tools,
   docs and rootfs work, and makes review hard.
 - **Git submodule of XNU:** rejected for now; submodules complicate CI and are easy to leave

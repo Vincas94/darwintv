@@ -13,6 +13,7 @@ the boot medium, the test strategy, the XNU pin, or the legal boundary.
 | [0006](0006-large-image-boot.md) | Block-backed large images; RAM disk for bring-up |
 | [0007](0007-test-strategy.md) | Test pyramid; hardware smoke; UART fallback |
 | [0008](0008-ethernet-first.md) | Ethernet/TFTP as the primary hardware loop |
+| [0009](0009-bcm2712-backport.md) | Backport BCM2712 to `xnu-8796.141.3`; 16 KiB pages; GICv2 first |
 
 ## Template
 

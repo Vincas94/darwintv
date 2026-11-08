@@ -18,8 +18,10 @@ AppleTV5,3_16.6_20M73_Restore.ipsw
 https://updates.cdn-apple.com/2023SummerFCS/fullrestores/042-18272/3CE91CB7-2332-42B7-AEF8-37478A767E90/AppleTV5,3_16.6_20M73_Restore.ipsw
 ```
 
-The XNU generation is **`xnu-8796.141.3`** (Darwin 22.6.0), the same tag `ios-sweet` and
-`xnu-on-pi` use.
+The XNU generation is **`xnu-8796.141.3`** (Darwin 22.6.0). Do not assume the current
+`tansanrao/xnu` `xnu-on-pi` branch uses that tag: it diverges from `rel/xnu-8796` (merge base
+`xnu-8796.101.5`) and carries a separate BCM2712 port. See
+[`docs/decisions/0009-bcm2712-backport.md`](decisions/0009-bcm2712-backport.md).
 
 ## What is in the IPSW
 

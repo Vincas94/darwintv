@@ -1,7 +1,7 @@
 import zipfile
 from pathlib import Path
 
-from tools.ipsw.extract import extract, list_entries
+from tools.ipsw.extract import extract, list_entries, verify
 
 
 def _make_ipsw(tmp_path: Path) -> Path:
@@ -30,3 +30,17 @@ def test_extract_flattens_paths(tmp_path: Path) -> None:
     )
     assert target.name == "DeviceTree.j42dap.im4p"
     assert target.read_bytes() == b"dtree"
+
+
+def test_verify_hashes(tmp_path: Path) -> None:
+    import hashlib
+
+    ipsw = _make_ipsw(tmp_path)
+    data = ipsw.read_bytes()
+    got1, got256 = verify(
+        ipsw,
+        sha1=hashlib.sha1(data).hexdigest(),
+        sha256=hashlib.sha256(data).hexdigest(),
+    )
+    assert len(got1) == 40
+    assert len(got256) == 64

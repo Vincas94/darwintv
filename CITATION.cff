@@ -5,7 +5,7 @@ abstract: >-
   An independent, reproducible bring-up of Apple's open-source XNU kernel on the
   Raspberry Pi 5, with the tvOS userland as the long-term target.
 authors:
-  - name: "DarwinTV contributors"
+  - name: "Vincas94"
 type: software
 license: MIT
 repository-code: "https://github.com/Vincas94/darwintv"

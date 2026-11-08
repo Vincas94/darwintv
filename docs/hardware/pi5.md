@@ -18,13 +18,13 @@ The Linux `bcm2712.dtsi` maps the `soc` node's child address `0x7c000000` to the
 | **GIC-400 GICC** | **`0x10_7fffa000`** | 0x2000 |
 | GIC-400 GICH | `0x10_7fffc000` | 0x2000 |
 | GIC-400 GICV | `0x10_7fffe000` | 0x2000 |
-| ARM generic timer | `CNTFRQ_EL0`, `CNTV_*` | virtual timer PPI 27 |
+| ARM generic timer | `CNTFRQ_EL0`, `CNTV_*` | GIC **INTID 27** (DT PPI 11), virtual timer |
 | **SDHCI `sdio1` (microSD)** | **`0x10_00fff000`** | 0x260 host, IRQ SPI 273 |
 | Wi-Fi `sdio2` | `0x10_01100000` | SDHCI, IRQ SPI 274 |
 | Bluetooth `uarta` | `0x10_7d50c000` | `brcm,bcm7271-uart`, IRQ SPI 276 |
 | Firmware mailbox | `0x10_7c013880` | property tags / framebuffer |
-| HDMI0 | `0x10_7c701400` | firmware framebuffer is simpler |
-| HDMI1 | `0x10_7c706400` | |
+| HDMI0 | `0x10_7c701400` | first of nine `hdmi@7ef00700` ranges; firmware framebuffer is simpler |
+| HDMI1 | `0x10_7c706400` | first of nine `hdmi@7ef05700` ranges |
 | **RP1** | PCIe2 | USB, Ethernet, 40-pin GPIO, UART0 |
 
 !!! note "RP1 is not needed for the first boot"
@@ -51,7 +51,8 @@ JST-SH connector** between the microHDMI ports. It is **3.3 V only**.
 
 ### UART clock and maximum baud
 
-The BCM2712 DTS gives the debug UART a **9.216 MHz** reference clock (`clk_uart`). The PL011
+The BCM2712 DTS gives the debug UART a **9.216 MHz** reference clock (`clk_uart`). The DTS does
+not give the ARM generic timer frequency, so the loader must read `CNTFRQ_EL0`. The PL011
 uses 16× oversampling, so:
 
 ```text
@@ -87,7 +88,6 @@ FAT boot partition. It passes the firmware DTB address in `x0` and enters at EL2
 `config.txt`:
 
 ```ini
-arm_64bit=1
 kernel=loader8.img
 kernel_address=0x200000
 uart_2ndstage=1
@@ -96,8 +96,13 @@ framebuffer_height=1080
 framebuffer_depth=32
 ```
 
-`kernel_address=0x200000` is the documented 64-bit load address. If your firmware revision
-ignores it, try `0x80000`; the QEMU `raspi4b` target uses `0x80000`.
+`kernel_address=0x200000` is the documented 64-bit load address. If the loader starts at
+`0x80000` instead, the Pi 5 EEPROM is old (pre-2023-10-30 firmware used that address): update the
+EEPROM rather than changing the loader. The loader prints a clear error if its runtime address
+does not match `LOAD_ADDR`. The QEMU `raspi4b` target intentionally uses `0x80000`.
+
+`arm_64bit=1` is unnecessary on the Pi 5: the firmware supports only 64-bit kernels and ignores
+the flag.
 
 ## Troubleshooting
 
@@ -122,3 +127,6 @@ ignores it, try `0x80000`; the QEMU `raspi4b` target uses `0x80000`.
   <https://pip.raspberrypi.com/documents/RP-008189-DS-debug-connector-specification.pdf>
 - `config.txt` boot options:
   <https://www.raspberrypi.com/documentation/computers/config_txt.html>
+- Revision codes: <https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#raspberry-pi-revision-codes>
+- 16K `kernel_2712.img`: <https://www.raspberrypi.com/documentation/computers/config_txt.html#kernel>
+- Kernel load address: <https://www.raspberrypi.com/documentation/computers/legacy_config_txt.html#kernel-address>

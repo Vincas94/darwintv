@@ -3,7 +3,6 @@
 # The firmware loads loader8.img at 0x200000 and payload.bin at 0x08000000.
 # Updating the kernel is then a single file copy; no reflash.
 
-arm_64bit=1
 kernel=loader8.img
 kernel_address=0x200000
 

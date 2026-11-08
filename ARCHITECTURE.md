@@ -55,9 +55,10 @@ BCM2712 boot ROM
 
 ## Why the kernel window is capped
 
-The BCM2712 `soc` block is mapped at `0x10_7c000000`, above 4 GB. On an 8 GB or 16 GB Pi 5 that
-region sits inside the physical RAM range, so the firmware reserves it. The first boot uses the
-low 4 GB to keep `boot_args.memSize` a single contiguous range. High memory is a later patch.
+The BCM2712 `soc` block is mapped at `0x10_7c000000`, about 65.9 GiB — above the 16 GiB maximum
+RAM (`0x4_0000_0000`), so it is not a RAM conflict. The first boot caps the kernel window at 4 GiB
+as a conservative bring-up choice pending the firmware `/memory` dump; high memory is a later
+patch. This is a `C` fact in `docs/facts.md`.
 
 ## Why not a fork
 

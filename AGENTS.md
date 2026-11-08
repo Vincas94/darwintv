@@ -70,3 +70,7 @@ make qemu                 # needs qemu-system-aarch64
 ## When unsure
 
 Ask. A wrong register address costs days of bring-up. A question costs minutes.
+
+## Task runner
+
+Use `make`. There is no `justfile`; do not add a second runner.

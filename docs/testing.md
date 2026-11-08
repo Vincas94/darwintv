@@ -6,7 +6,7 @@ The minutes in the UART numbers are **transfer** time, not XNU boot time.
 
 | Step | UART 460800 | microSD / FAT | TFTP | QEMU |
 |---|---:|---:|---:|---:|
-| 15 MB `payload.bin` transfer | ~5.5 min | < 1 s | ~1 s | n/a |
+| 15 MB `payload.bin` transfer | ~5.5 min | < 1 s | unmeasured | n/a |
 | Firmware + loader | ~1 s | ~1 s | ~1 s | seconds |
 | XNU to serial banner | ~1–3 s | ~1–3 s | ~1–3 s | seconds–minutes (TCG) |
 | XNU to `launchd` (tiny root) | seconds | seconds | seconds | minutes |

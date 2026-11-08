@@ -35,16 +35,46 @@ scripts/apply-patches.sh      # patches/ in order
 
 ## Step 2 — add the BCM2712 board config
 
-Planned patch series (see `docs/patches.md`):
+**Base it on Apple's in-tree BCM2837 port, not on a third-party RPi4 header.** The pinned tag
+already has:
+
+- `pexpert/pexpert/arm64/BCM2837.h`
+- `config/MASTER.arm64.bcm2837`
+- `MACHINE_FLAGS_ARM64_BCM2837` and `SUPPORTED_ARM64_MACHINE_CONFIGS` in `makedefs/MakeInc.def`
+- `#ifdef BCM2837` guards in `osfmk/arm64/start.s`, `osfmk/kern/startup.c`,
+  `iokit/Kernel/IOStartIOKit.cpp` and `pexpert/arm/pe_serial.c`
+
+That is the only in-tree example of XNU on a non-Apple SoC. For BCM2712:
 
 - `makedefs/MakeInc.def`: `MACHINE_FLAGS_ARM64_BCM2712 = -DARM64_BOARD_CONFIG_BCM2712 -mcpu=cortex-a76`
 - `SUPPORTED_ARM64_MACHINE_CONFIGS` += `BCM2712`
 - `pexpert/pexpert/arm64/BCM2712.h`: `__ARM_16K_PG__`, `HAS_GIC_V2`, `PL011_UART`,
-  `ARM_ARCH_TIMER`, `NO_MONITOR`, `BCM2712_UP_ONLY` for the first boot
-- `config/MASTER.arm64.bcm2712.MacOSX`: copy the RPi4/RPI4 config, add `mockfs`
+  `ARM_ARCH_TIMER`, `NO_MONITOR`; keep `BCM2712_UP_ONLY` for the first boot
+- `config/MASTER.arm64.bcm2712.MacOSX`: derive from `MASTER.arm64.bcm2837`, add `mockfs` and the
+  BCM2712 memory/IRQ settings
 - `iokit/Kernel/arm/BCM2712PlatformExpert.cpp`
 - `pexpert/arm/pe_gicv2.c` (from the Pi 4 work) and the timer wiring
 - `pexpert/arm/pe_serial.c` PL011 path
+
+### The newer BCM2712 reference branch
+
+`tansanrao/xnu` branch **`xnu-on-pi`** (head `0c7ff382`, 2026-09-05) already contains a BCM2712
+port. It is a **backport reference**, not a base:
+
+- its merge base is `xnu-8796.101.5`, not our `xnu-8796.141.3` tag (33 ahead / 2 behind);
+- it uses a **4 KiB** granule and an **IOKit** GIC driver;
+- we keep **16 KiB** pages for tvOS and start with the pexpert GICv2 path.
+
+See [ADR 0009](decisions/0009-bcm2712-backport.md). Do not cherry-pick it wholesale.
+
+### BCM2837 guards to evaluate
+
+| Guard | Pi 5 need |
+|---|---|
+| `startup.c`: skip trust-cache init | likely yes (no trust cache) |
+| `IOStartIOKit.cpp`: no RTC wait | likely yes (no RTC) |
+| `start.s`: timer routing before MMU | adapt to BCM2712/GIC |
+| `pe_serial.c`: mini UART | no — Pi 5 has a PL011 |
 
 ## Step 3 — build on a macOS runner
 

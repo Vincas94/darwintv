@@ -45,6 +45,8 @@ XNU does **not** understand an FDT. The loader builds an ADT with:
     /memory-map
   /cpus/cpu0
     state = "running", reg, timebase-frequency, clock frequencies
+    # timebase-frequency must come from CNTFRQ_EL0; the 54 MHz clk_osc in the
+    # DTS is not the ARM generic timer frequency.
   /arm-io
     ranges = <0, 0x107c000000, 0x04000000>
     /uart0    compatible "arm,pl011", reg <0x001001000, 0x200>
@@ -67,11 +69,22 @@ Apple TV's `DeviceTree.j42dap.im4p` so `MobileGestalt` and `PineBoard` see the r
 | `boot_args` | after the ADT |
 | Kernel RAM window | `0x02000000` … min(RAM, 4 GB) |
 
-The BCM2712 `soc` block at `0x10_7c000000` sits above 4 GB. On 8 GB/16 GB boards that address is
-inside the physical RAM range, so the firmware reserves it. The first boot caps the kernel window
-below 4 GB to keep `memSize` one contiguous range; high memory is a later patch.
+The BCM2712 `soc` block at `0x10_7c000000` is about 65.9 GiB, well above the 16 GiB maximum RAM
+(the 16 GiB end is `0x4_0000_0000`). It is not a RAM conflict. The first boot caps the kernel
+window at 4 GiB as a conservative bring-up choice pending a dump of the firmware `/memory` and
+`/reserved-memory` nodes. High-memory support is a later patch; the real reason for the cap is
+marked `C` in `docs/facts.md`.
 
 ## Why the loader is at 0x200000
 
 The Pi 5 firmware's documented 64-bit load address is `0x200000`. The loader must end before
 `0x02000000`, where the XNU Mach-O begins. The linker script asserts this.
+
+
+## Secondary cores
+
+The loader parks secondary cores in a `wfe` loop before the EL drop. A core parked that way cannot
+later be started by PSCI `CPU_ON`; it must be left in the state the firmware/TF-A expects, or
+started by the kernel. On the Pi 5 the TF-A stub likely holds secondaries off, so this mainly
+matters under QEMU. First boot uses `cpus=1`; SMP is a separate milestone (Q26 in
+`docs/open-questions.md`).

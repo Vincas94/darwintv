@@ -1,6 +1,6 @@
 """Apple Device Tree (ADT) writer.
 
-XNU's ``pexpert/device_tree.c`` parses a flattened Apple device tree, not an
+XNU's ``pexpert/gen/device_tree.c`` parses a flattened Apple device tree, not an
 FDT. The format is::
 
     node      = { u32 nprops, u32 nchildren, property*, node* }
@@ -35,6 +35,8 @@ GIC_REGS = (
     0x003FFE000,
     0x2000,
 )
+# Example only: the Pi 5 DTS does not give the ARM generic timer frequency.
+# The loader reads CNTFRQ_EL0; pass its value here when packing a real payload.
 TIMEBASE_HZ = 54_000_000
 
 

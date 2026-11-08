@@ -13,6 +13,7 @@
 #define PL011_IMSC 0x38u
 #define PL011_ICR 0x44u
 
+#define PL011_FR_BUSY (1u << 3)
 #define PL011_FR_RXFE (1u << 4)
 #define PL011_FR_TXFF (1u << 5)
 #define PL011_DR_ERR_MASK (0xfu << 8)
@@ -30,6 +31,7 @@ void pl011_init(uintptr_t base);
 void pl011_set_baud(uintptr_t base, uint32_t uartclk, uint32_t baud);
 void pl011_putc(uintptr_t base, char c);
 void pl011_put_hex(uintptr_t base, uintptr_t value);
+void pl011_put_hex32(uintptr_t base, uint32_t value);
 int pl011_rx_ready(uintptr_t base);
 char pl011_getc(uintptr_t base);
 void pl011_puts(uintptr_t base, const char *s);

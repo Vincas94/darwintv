@@ -15,9 +15,11 @@ breaking the project.
 
 ## Current state in one paragraph
 
-The host tools, docs, CI, and a freestanding M1 loader exist. The loader prints a banner, saves
-the firmware DTB pointer, and validates/prints `payload.bin`; it does not parse `/memory`, copy the
-segments, build `boot_args`, or jump to XNU yet.
+The host tools, docs, CI, and a freestanding M1 loader exist. The loader checks its runtime
+address, saves the firmware DTB pointer, prints `CNTFRQ_EL0`, installs exception vectors,
+sets `VPIDR_EL2`/`VMPIDR_EL2`, and validates/prints `payload.bin`. It does not parse `/memory`,
+copy the segments, build `boot_args`, or jump to XNU yet. Apple's tag ships a BCM2837 port; the
+newer `xnu-on-pi` branch is a BCM2712 backport reference (ADR 0009).
 No XNU patch, build, or Pi 5 run exists yet. The immediate milestone is M2: payload format +
 loader handoff + XNU board config/platform expert.
 

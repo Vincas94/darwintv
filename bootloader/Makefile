@@ -25,7 +25,7 @@ ELF := $(BUILD)/loader.elf
 IMG := $(BUILD)/loader8.img
 
 CFLAGS := -std=c11 -O2 -g -Wall -Wextra -Werror -ffreestanding \
-          -fno-stack-protector -fno-pic -fno-pie -mgeneral-regs-only \
+          -fno-stack-protector -fno-pic -fno-pie -mgeneral-regs-only -mstrict-align \
           $(BOARD_DEFINE) -Iinclude
 LDFLAGS := -T linker.ld -nostdlib -nostartfiles -Wl,--build-id=none \
            -Wl,--no-warn-rwx-segments -Wl,--defsym=LOAD_ADDR=$(LOAD_ADDR)

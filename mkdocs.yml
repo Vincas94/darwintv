@@ -68,6 +68,7 @@ nav:
   - CI: ci.md
   - Research:
       - Initial survey (2026-11-08): research/2026-11-08-initial-survey.md
+      - Review addendum (2026-11-08): research/2026-11-08-review-addendum.md
   - Decisions:
       - Index: decisions/README.md
       - "0001 — Fresh repository": decisions/0001-fresh-repo.md
@@ -78,4 +79,5 @@ nav:
       - "0006 — Large images": decisions/0006-large-image-boot.md
       - "0007 — Test strategy": decisions/0007-test-strategy.md
       - "0008 — Ethernet-first": decisions/0008-ethernet-first.md
+      - "0009 — BCM2712 backport": decisions/0009-bcm2712-backport.md
   - Contributing: contributing.md

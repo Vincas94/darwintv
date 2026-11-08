@@ -5,16 +5,19 @@
 
 #include <stdint.h>
 
+static const uint32_t crc32_nibble[16] = {
+    0x00000000u, 0x1DB71064u, 0x3B6E20C8u, 0x26D930ACu, 0x76DC4190u, 0x6B6B51F4u,
+    0x4DB26158u, 0x5005713Cu, 0xEDB88320u, 0xF00F9344u, 0xD6D6A3E8u, 0xCB61B38Cu,
+    0x9B64C2B0u, 0x86D3D2D4u, 0xA00AE278u, 0xBDBDF21Cu,
+};
+
 static uint32_t crc32_update(uint32_t crc, const uint8_t *data, uint32_t length)
 {
 	uint32_t i;
 
 	for (i = 0; i < length; i++) {
-		uint32_t bit;
-		crc ^= data[i];
-		for (bit = 0; bit < 8; bit++) {
-			crc = (crc >> 1) ^ (0xEDB88320u & (0u - (crc & 1u)));
-		}
+		crc = (crc >> 4) ^ crc32_nibble[(crc ^ data[i]) & 0xFu];
+		crc = (crc >> 4) ^ crc32_nibble[(crc ^ (data[i] >> 4)) & 0xFu];
 	}
 	return crc;
 }
@@ -55,10 +58,15 @@ int payload_validate(const void *buffer, uint32_t max_size, struct payload_info 
 		return 0;
 	}
 
-	table_end = (uint64_t)header->header_size + (uint64_t)header->nsegs * PAYLOAD_SEGMENT_SIZE;
-	if (table_end > header->total_size ||
-	    header->adt_offset + header->adt_size > header->total_size ||
-	    header->cmdline_offset + header->cmdline_size > header->total_size) {
+	if (header->header_size > header->total_size ||
+	    header->nsegs > (header->total_size - header->header_size) / PAYLOAD_SEGMENT_SIZE) {
+		return 0;
+	}
+	table_end = header->header_size + (uint64_t)header->nsegs * PAYLOAD_SEGMENT_SIZE;
+	if (table_end > header->total_size || header->adt_offset > header->total_size ||
+	    header->adt_size > header->total_size - header->adt_offset ||
+	    header->cmdline_offset > header->total_size ||
+	    header->cmdline_size > header->total_size - header->cmdline_offset) {
 		return 0;
 	}
 
@@ -70,9 +78,15 @@ int payload_validate(const void *buffer, uint32_t max_size, struct payload_info 
 		const struct payload_segment *segment =
 		    (const struct payload_segment *)(bytes + header->header_size +
 						     (uint64_t)i * PAYLOAD_SEGMENT_SIZE);
-		if (segment->file_offset + segment->file_size > header->total_size ||
-		    segment->vmaddr < header->virt_base ||
-		    segment->vmaddr - header->virt_base + segment->vmsize > header->mem_size) {
+		uint64_t offset;
+
+		if (segment->file_offset > header->total_size ||
+		    segment->file_size > header->total_size - segment->file_offset ||
+		    segment->vmaddr < header->virt_base) {
+			return 0;
+		}
+		offset = segment->vmaddr - header->virt_base;
+		if (offset > header->mem_size || segment->vmsize > header->mem_size - offset) {
 			return 0;
 		}
 	}
@@ -95,7 +109,7 @@ void payload_print(const struct payload_info *info)
 	pl011_puts(PL011_BASE, "payload:  ");
 	pl011_puts(PL011_BASE, PAYLOAD_MAGIC);
 	pl011_puts(PL011_BASE, " v");
-	pl011_put_hex(PL011_BASE, header->version);
+	pl011_put_hex32(PL011_BASE, header->version);
 	pl011_puts(PL011_BASE, " size=");
 	pl011_put_hex(PL011_BASE, header->total_size);
 	pl011_puts(PL011_BASE, "\n");
@@ -112,7 +126,7 @@ void payload_print(const struct payload_info *info)
 	pl011_put_hex(PL011_BASE, header->mem_size);
 	pl011_puts(PL011_BASE, "\n");
 	pl011_puts(PL011_BASE, "segments: ");
-	pl011_put_hex(PL011_BASE, header->nsegs);
+	pl011_put_hex32(PL011_BASE, header->nsegs);
 	pl011_puts(PL011_BASE, "\n");
 
 	for (i = 0; i < header->nsegs; i++) {

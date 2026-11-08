@@ -1,7 +1,6 @@
 # DarwinTV — first M1 network boot, before a kernel payload exists.
 # No ramfsfile: the firmware must not look for payload.bin yet.
 
-arm_64bit=1
 kernel=kernel8.img
 kernel_address=0x200000
 

@@ -41,3 +41,8 @@ make loader BOARD=qemu-virt
 make docs
 make netboot
 ```
+
+## Hardening
+
+Actions are currently pinned to release tags. Pinning every `uses:` to a commit SHA is a
+future hardening step; Dependabot keeps the tags current.

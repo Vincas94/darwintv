@@ -23,10 +23,13 @@ modelled here.
 
 The loader now:
 
-1. saves the firmware DTB pointer (`x0`) in `x19` and prints it,
-2. validates `payload.bin` at `PAYLOAD_ADDR` (magic, version, bounds, CRC32),
-3. prints the entry, bases, segments and command line,
-4. spins.
+1. checks its runtime address against `LOAD_ADDR` and prints a clear EEPROM error on mismatch,
+2. saves the firmware DTB pointer (`x0`) and prints it plus `CNTFRQ_EL0`,
+3. installs EL1/EL2 exception vectors that print `ESR`/`ELR`/`FAR`/`SPSR`,
+4. copies `MIDR_EL1`/`MPIDR_EL1` to `VPIDR_EL2`/`VMPIDR_EL2` before the EL drop,
+5. validates `payload.bin` at `PAYLOAD_ADDR` (magic, version, bounds, CRC32),
+6. prints the entry, bases, segments and command line,
+7. spins.
 
 Next:
 

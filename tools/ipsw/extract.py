@@ -11,6 +11,7 @@ Remote range extraction is a future feature; see ``docs/tvos.md`` for the
 from __future__ import annotations
 
 import argparse
+import hashlib
 import zipfile
 from pathlib import Path
 
@@ -33,6 +34,23 @@ def extract(path: Path, name: str, destination: Path) -> Path:
     return target
 
 
+def verify(path: Path, *, sha1: str | None = None, sha256: str | None = None) -> tuple[str, str]:
+    """Hash an IPSW, optionally comparing against expected values."""
+    h1 = hashlib.sha1()
+    h256 = hashlib.sha256()
+    with path.open("rb") as stream:
+        while chunk := stream.read(1024 * 1024):
+            h1.update(chunk)
+            h256.update(chunk)
+    got1 = h1.hexdigest()
+    got256 = h256.hexdigest()
+    if sha1 is not None and got1.lower() != sha1.lower():
+        raise ValueError(f"sha1 mismatch: {got1} != {sha1}")
+    if sha256 is not None and got256.lower() != sha256.lower():
+        raise ValueError(f"sha256 mismatch: {got256} != {sha256}")
+    return got1, got256
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="List or extract an IPSW")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -45,11 +63,22 @@ def main(argv: list[str] | None = None) -> int:
     extract_parser.add_argument("name")
     extract_parser.add_argument("--out", type=Path, default=Path("build/ipsw"))
 
+    verify_parser = subparsers.add_parser("verify", help="check IPSW hashes")
+    verify_parser.add_argument("ipsw", type=Path)
+    verify_parser.add_argument("--sha1")
+    verify_parser.add_argument("--sha256")
+
     args = parser.parse_args(argv)
 
     if args.command == "list":
         for info in list_entries(args.ipsw):
             print(f"{info.file_size:>12}  {info.filename}")
+        return 0
+
+    if args.command == "verify":
+        got1, got256 = verify(args.ipsw, sha1=args.sha1, sha256=args.sha256)
+        print(f"sha1:   {got1}")
+        print(f"sha256: {got256}")
         return 0
 
     target = extract(args.ipsw, args.name, args.out)
