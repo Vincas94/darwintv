@@ -4,7 +4,7 @@ SHELL := /bin/bash
 BOARD ?= pi5
 XNU_VERSION ?= xnu-8796.141.3
 
-.PHONY: help bootstrap check lint test fmt docs loader qemu xnu-fetch xnu-patches clean
+.PHONY: help bootstrap check lint test fmt docs loader qemu xnu-fetch xnu-patches hw-smoke clean
 
 help:
 	@echo "DarwinTV"
@@ -51,6 +51,11 @@ xnu-fetch:
 
 xnu-patches:
 	./scripts/apply-patches.sh
+
+hw-smoke:
+	./scripts/flash-payload.sh
+	./scripts/power-cycle.sh
+	./scripts/serial-capture.sh
 
 clean:
 	$(MAKE) -C bootloader clean

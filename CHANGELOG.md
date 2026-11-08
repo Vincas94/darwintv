@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - M1 bare-metal AArch64 loader: EL3/EL2→EL1, PL011 console, Pi 5 and QEMU targets.
 - Update workflow: FAT32 boot files, separate `payload.bin`, incremental root updates, A/B slots.
 - Large-image strategy: block-backed root, RAM-disk bring-up path, U-Boot/EDK2 first stage.
+- Testing strategy: test pyramid, QEMU-first, fast hardware smoke, UART as fallback.
 
 ## [0.0.1] - 2026-11-08
 

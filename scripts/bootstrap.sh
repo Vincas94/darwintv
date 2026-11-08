@@ -19,6 +19,7 @@ if command -v apt-get >/dev/null 2>&1; then
         gcc-aarch64-linux-gnu \
         binutils-aarch64-linux-gnu \
         qemu-system-arm \
+        picocom \
         device-tree-compiler
 else
     echo "!! apt-get not found; install an AArch64 cross compiler and QEMU manually."

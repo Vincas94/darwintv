@@ -46,6 +46,7 @@ nav:
   - Boot flow: boot-flow.md
   - Updating images: updates.md
   - Booting large images: large-images.md
+  - Testing and dev loop: testing.md
   - tvOS: tvos.md
   - Research:
       - Initial survey (2026-11-08): research/2026-11-08-initial-survey.md
@@ -56,4 +57,5 @@ nav:
       - "0004 — QEMU first": decisions/0004-qemu-first.md
       - "0005 — File-based updates": decisions/0005-update-workflow.md
       - "0006 — Large images": decisions/0006-large-image-boot.md
+      - "0007 — Test strategy": decisions/0007-test-strategy.md
   - Contributing: contributing.md
