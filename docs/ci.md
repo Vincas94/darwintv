@@ -4,7 +4,7 @@
 
 | Workflow | Runs | Checks |
 |---|---|---|
-| `ci.yml` | push/PR | host tests, lint, docs, loader build for `pi5`, `qemu-raspi4b`, `qemu-virt` |
+| `ci.yml` | push/PR | host tests, lint, docs, loader build for `pi5`, `qemu-raspi4b`, `qemu-virt`, and QEMU smoke tests with a synthetic payload |
 | `docs.yml` | push to `main` | MkDocs build + GitHub Pages deploy |
 | `codeql.yml` | push/PR/weekly | Python CodeQL analysis |
 | `scorecard.yml` | weekly | OpenSSF Scorecard |
