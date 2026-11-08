@@ -87,3 +87,17 @@ ignores it, try `0x80000`; the QEMU `raspi4b` target uses `0x80000`.
 | Firmware log missing | `BOOT_UART=1` in the EEPROM config, `uart_2ndstage=1` in `config.txt` |
 | Garbage characters | baud rate or adapter voltage |
 | Pi boots Linux instead | `kernel=` filename or the boot partition was not updated |
+
+## Sources
+
+- BCM2712 device tree (`uart0`, `gic-400`, `sdio1`, `sdio2`, `uarta`, HDMI, mailbox):
+  <https://github.com/raspberrypi/linux/blob/rpi-6.6.y/arch/arm64/boot/dts/broadcom/bcm2712.dtsi>
+- Raspberry Pi 5 board tree (`uart10` alias, Wi-Fi on `sdio2`, BT on `uarta`):
+  <https://github.com/raspberrypi/linux/blob/rpi-6.6.y/arch/arm64/boot/dts/broadcom/bcm2712-rpi-5-b.dts>
+- RP1 I/O controller: <https://www.raspberrypi.com/documentation/computers/io-controllers/rp1.html>
+- UART configuration and the Pi 5 debug connector:
+  <https://www.raspberrypi.com/documentation/computers/configuration.html#configure-uarts>
+- 3-pin debug connector specification:
+  <https://pip.raspberrypi.com/documents/RP-008189-DS-debug-connector-specification.pdf>
+- `config.txt` boot options:
+  <https://www.raspberrypi.com/documentation/computers/config_txt.html>
