@@ -61,10 +61,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu qemu-system-arm
           pip install -e ".[dev]"
-      - name: Build loaders
-        run: |
-          make loader BOARD=qemu-raspi4b
-          make loader BOARD=qemu-virt
+      - name: Build loader
+        run: make loader BOARD=qemu-virt
       - name: Build test payload
         run: |
           python - <<'PY'
@@ -75,16 +73,6 @@ jobs:
           Path("/tmp/macho.bin").write_bytes(image)
           PY
           python -m tools.payload pack --kernel /tmp/macho.bin --out /tmp/payload.bin
-      - name: Run raspi4b
-        run: |
-          timeout 8 qemu-system-aarch64 -M raspi4b \
-            -kernel bootloader/build/qemu-raspi4b/loader8.img \
-            -device loader,file=/tmp/payload.bin,addr=0x08000000,force-raw=on \
-            -serial stdio -display none -monitor none > /tmp/raspi4b.log 2>&1 || true
-          cat /tmp/raspi4b.log
-          grep -q 'DarwinTV loader' /tmp/raspi4b.log
-          grep -q 'payload:  DTVPLD01' /tmp/raspi4b.log
-          grep -q 'payload valid' /tmp/raspi4b.log
       - name: Run virt
         run: |
           timeout 8 qemu-system-aarch64 -M virt,gic-version=2 -cpu cortex-a76 -smp 4 -m 2G \

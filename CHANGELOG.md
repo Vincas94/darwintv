@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `qemu-virt` loader target; anchored `.gitignore` so `tools/ipsw` and `tools/rootfs` are tracked.
 - Payload format, packer/inspector (`tools/payload`), 6 tests, and loader-side CRC/bounds validation.
 - TFTP first-boot EEPROM config, no-payload M1 config, and the detected host/network values.
-- QEMU smoke CI for `raspi4b`/`virt` with a synthetic payload; dependency/action bumps.
+- QEMU smoke CI for `virt` with a synthetic payload; `raspi4b` local target; dependency/action bumps.
 
 ## [0.0.1] - 2026-11-08
 

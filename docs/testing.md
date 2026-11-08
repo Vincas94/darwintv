@@ -41,7 +41,7 @@ reproduced on the host.
 
 ## L1/L2 — QEMU first
 
-QEMU `raspi4b` is close enough for the generic bring-up. CI now runs both `raspi4b` and `virt` with a synthetic payload:
+QEMU `raspi4b` is close enough for the generic bring-up. CI runs `virt` with a synthetic payload. `raspi4b` is the local target; QEMU 8.2 on Ubuntu 24.04 does not expose that machine in its aarch64 binary, so CI uses `virt`:
 
 - GIC-400 / GICv2,
 - PL011,

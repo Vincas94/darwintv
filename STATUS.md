@@ -16,7 +16,7 @@ from what is assumed, and lists what is blocked on hardware.
 | ADT writer | works on the host | `tools/adt/adt.py`, tests; not yet consumed by XNU |
 | IPSW listing/extraction | works on local ZIPs | `tools/ipsw/extract.py`, tests |
 | M1 loader | builds | `make loader BOARD=pi5`, `qemu-raspi4b`, `qemu-virt`; ~3.3 KB raw image |
-| M1 loader on QEMU | **verified** | `raspi4b` and `virt` boot the banner; payload validator prints a synthetic payload |
+| M1 loader on QEMU | **verified** | `raspi4b` (local QEMU 11) and `virt` (CI) boot the banner; payload validator prints a synthetic payload |
 | M1 loader on hardware | **not run** | no Pi 5 boot yet |
 | Payload packer/validator | works | `tools/payload`, 6 tests; `payload.bin` round-trips |
 | XNU patches | none yet | `patches/` is empty; `docs/patches.md` is the plan |

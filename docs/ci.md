@@ -4,7 +4,7 @@
 
 | Workflow | Runs | Checks |
 |---|---|---|
-| `ci.yml` | push/PR | host tests, lint, docs, loader build for `pi5`, `qemu-raspi4b`, `qemu-virt`, and QEMU smoke tests with a synthetic payload |
+| `ci.yml` | push/PR | host tests, lint, docs, loader build for `pi5`, `qemu-raspi4b`, `qemu-virt`, and a QEMU `virt` smoke test with a synthetic payload (`raspi4b` is tested locally; Ubuntu 24.04 QEMU 8.2 does not expose it in the aarch64 binary) |
 | `docs.yml` | push to `main` | MkDocs build + GitHub Pages deploy |
 | `codeql.yml` | push/PR/weekly | Python CodeQL analysis |
 | `scorecard.yml` | weekly | OpenSSF Scorecard |
