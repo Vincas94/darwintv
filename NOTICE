@@ -1,0 +1,27 @@
+DarwinTV
+Copyright (c) 2026 DarwinTV contributors
+
+DarwinTV is an independent research project. It is not affiliated with or
+endorsed by Apple Inc., Raspberry Pi Ltd., or the authors of the projects it
+references. "Apple", "Apple TV", "tvOS", "Darwin", "XNU", "iPhone" and
+"Raspberry Pi" are named only to describe what the code works with.
+
+Licensing
+---------
+The original code in this repository is MIT-licensed (see LICENSE).
+
+Apple's XNU source is licensed under the Apple Public Source License 2.0
+(APSL-2.0). Patches in patches/ that are derived from XNU are provided under
+APSL-2.0. See LICENSE.APSL and THIRD_PARTY_LICENSES.md.
+
+No Apple firmware, IPSW, kernelcache, device tree, userland, keys, certificates,
+or activation material is distributed in this repository. You supply your own
+from your own devices.
+
+References and prior art
+------------------------
+- apple-oss-distributions/xnu (APSL-2.0)
+- tansanrao/xnu and tansanrao/xnu-on-pi (research references)
+- dipa-studio/ios-sweet (research reference)
+- oosexgang/hakios-xnu-kernel (MIT + APSL-2.0)
+- Raspberry Pi documentation and the Raspberry Pi Linux device trees

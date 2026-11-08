@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint-test:
+    name: lint + tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -e ".[dev]"
+      - name: Check
+        run: ./scripts/check.sh
+
+  bootloader:
+    name: bootloader
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install cross compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
+      - name: Build Pi 5
+        run: make loader BOARD=pi5
+      - name: Build QEMU raspi4b
+        run: make loader BOARD=qemu-raspi4b
+      - name: Inspect
+        run: |
+          file bootloader/build/pi5/loader.elf
+          test -s bootloader/build/pi5/loader8.img
+          test -s bootloader/build/qemu-raspi4b/loader8.img
+          size=$(stat -c%s bootloader/build/pi5/loader8.img)
+          echo "loader8.img = $size bytes"
+          test "$size" -lt 1048576

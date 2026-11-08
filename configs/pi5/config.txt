@@ -1,0 +1,17 @@
+# DarwinTV — Raspberry Pi 5 boot configuration
+#
+# Copy this to the FAT boot partition as config.txt (keep a backup).
+# The Pi 5 firmware loads the raw AArch64 image at 0x200000 and passes the
+# firmware DTB address in x0.
+
+arm_64bit=1
+kernel=loader8.img
+kernel_address=0x200000
+
+# Print the second-stage firmware log on the debug UART.
+uart_2ndstage=1
+
+# Keep HDMI alive so the firmware can hand us a framebuffer later.
+framebuffer_width=1920
+framebuffer_height=1080
+framebuffer_depth=32

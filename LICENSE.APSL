@@ -1,0 +1,9 @@
+The patches in patches/ that are derived from Apple's XNU source are provided
+under the Apple Public Source License 2.0 (APSL-2.0).
+
+The full text is available from Apple:
+https://opensource.apple.com/license/apsl/
+
+When you distribute a patch or a modified XNU source tree, include the APSL
+text and preserve Apple's copyright notices. Nothing in this file is legal
+advice.

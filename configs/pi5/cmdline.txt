@@ -1,0 +1,4 @@
+# Only used when booting a Linux kernel for comparison. The DarwinTV loader
+# gets its command line from the firmware DTB /chosen/bootargs or from the
+# boot_args it builds itself.
+console=serial0,115200

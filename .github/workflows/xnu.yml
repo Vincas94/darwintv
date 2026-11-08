@@ -1,0 +1,24 @@
+name: XNU patches
+
+on:
+  workflow_dispatch:
+    inputs:
+      xnu_version:
+        description: XNU tag to test
+        required: true
+        default: xnu-8796.141.3
+
+permissions:
+  contents: read
+
+jobs:
+  patches:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch XNU
+        env:
+          XNU_VERSION: ${{ inputs.xnu_version }}
+        run: ./scripts/fetch-xnu.sh "$XNU_VERSION"
+      - name: Apply patch series
+        run: ./scripts/apply-patches.sh

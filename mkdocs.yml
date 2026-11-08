@@ -1,0 +1,55 @@
+site_name: DarwinTV
+site_description: Apple TV's tvOS userland on a Raspberry Pi 5, via a from-source XNU port.
+site_url: https://OWNER.github.io/darwintv/
+repo_url: https://github.com/OWNER/darwintv
+repo_name: OWNER/darwintv
+copyright: Copyright &copy; 2026 DarwinTV contributors
+
+theme:
+  name: material
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
+  palette:
+    - scheme: slate
+      primary: black
+      accent: red
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - Hardware:
+      - Raspberry Pi 5: hardware/pi5.md
+  - Boot flow: boot-flow.md
+  - tvOS: tvos.md
+  - Research:
+      - Initial survey (2026-11-08): research/2026-11-08-initial-survey.md
+  - Decisions:
+      - "0001 — Fresh repository": decisions/0001-fresh-repo.md
+      - "0002 — Pinned XNU and patches": decisions/0002-pinned-xnu-and-patches.md
+      - "0003 — AppleTV5,3 / tvOS 16": decisions/0003-target-appletv5-3-tvos-16.md
+      - "0004 — QEMU first": decisions/0004-qemu-first.md
+  - Contributing: contributing.md

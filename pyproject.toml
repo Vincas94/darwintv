@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "darwintv"
+version = "0.0.1"
+description = "tvOS userland on a Raspberry Pi 5, via a from-source XNU port"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "DarwinTV contributors" }]
+keywords = ["xnu", "darwin", "tvos", "raspberry-pi-5", "bcm2712", "arm64"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: System :: Operating System Kernels",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "clang-format==18.1.8",
+    "mkdocs-material>=9.5",
+    "mypy>=1.11",
+    "pre-commit>=3.7",
+    "pytest>=8",
+    "ruff==0.6.9",
+    "shellcheck-py>=0.10.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/OWNER/darwintv"
+Documentation = "https://github.com/OWNER/darwintv/tree/main/docs"
+Issues = "https://github.com/OWNER/darwintv/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["tools"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true

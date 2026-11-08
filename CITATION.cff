@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use DarwinTV in research, cite it as below."
+title: DarwinTV
+abstract: >-
+  An independent, reproducible bring-up of Apple's open-source XNU kernel on the
+  Raspberry Pi 5, with the tvOS userland as the long-term target.
+authors:
+  - name: "DarwinTV contributors"
+type: software
+license: MIT
+repository-code: "https://github.com/OWNER/darwintv"
+url: "https://github.com/OWNER/darwintv"
+keywords:
+  - xnu
+  - darwin
+  - tvos
+  - raspberry-pi-5
+  - bcm2712
+  - arm64

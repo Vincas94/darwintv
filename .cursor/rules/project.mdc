@@ -1,0 +1,16 @@
+---
+description: DarwinTV project rules
+alwaysApply: true
+---
+
+# DarwinTV
+
+Read `AGENTS.md`, `ARCHITECTURE.md`, `docs/hardware/pi5.md` and `docs/boot-flow.md`.
+
+- No Apple firmware, IPSW, kernelcache, device tree, userland or keys in the repository.
+- No activation/DRM circumvention.
+- Do not invent hardware addresses; cite the DTS or `docs/hardware/pi5.md`.
+- Kernel changes go in `patches/`, one logical change per patch.
+- Run `make check` and `make loader BOARD=pi5` before proposing changes.
+- QEMU before hardware; never run destructive commands on a real Pi.
+- Conventional Commits + DCO sign-off.

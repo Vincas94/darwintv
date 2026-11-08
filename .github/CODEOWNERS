@@ -1,0 +1,7 @@
+# Replace @OWNER with your GitHub handle before enabling branch protection.
+* @OWNER
+
+/bootloader/ @OWNER
+/docs/ @OWNER
+/patches/ @OWNER
+/tools/ @OWNER

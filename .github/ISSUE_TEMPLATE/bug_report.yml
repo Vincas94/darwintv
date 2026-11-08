@@ -1,0 +1,62 @@
+name: Bug report
+description: Something does not build, boot, or behave as documented.
+title: "bug: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. **Do not paste device serial numbers, calibration data, Apple keys, or IPSW contents.**
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      placeholder: |
+        1. make loader BOARD=pi5
+        2. copy to the boot partition
+        3. power on
+    validations:
+      required: true
+  - type: input
+    id: revision
+    attributes:
+      label: Pi 5 revision and RAM
+      placeholder: "e.g. 8 GB, 2024 revision"
+  - type: input
+    id: eeprom
+    attributes:
+      label: EEPROM / bootloader version
+      description: Output of `rpi-eeprom-update`.
+  - type: textarea
+    id: config
+    attributes:
+      label: config.txt
+      render: ini
+  - type: textarea
+    id: serial
+    attributes:
+      label: Serial log
+      description: From power-on to the failure.
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I am using a 3.3 V adapter on the debug connector, not VCC.
+          required: true
+        - label: I removed serial numbers, calibration data and Apple keys.
+          required: true

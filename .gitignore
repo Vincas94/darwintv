@@ -1,0 +1,42 @@
+# Build output
+build/
+site/
+dist/
+*.o
+*.elf
+*.img
+*.bin
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+
+# Upstream XNU (fetched, never committed)
+third_party/xnu/
+
+# Apple firmware and userland (never commit)
+*.ipsw
+*.dmg
+*.im4p
+*.im4p.plist
+*.trustcache
+*.root_hash
+*.mtree
+*.hfs
+*.apfs
+firmware/
+ipsw/
+rootfs/
+logs/
+*.log
+
+# Editors and OS
+.DS_Store
+.idea/
+.vscode/
+*.swp

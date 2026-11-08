@@ -1,0 +1,7 @@
+read:
+  - AGENTS.md
+  - ARCHITECTURE.md
+  - docs/hardware/pi5.md
+  - docs/boot-flow.md
+auto-commits: false
+dirty-commits: false

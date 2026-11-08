@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/OWNER/darwintv/tree/main/docs
+    about: Read the hardware, boot-flow and tvOS notes first.
+  - name: Security report
+    url: https://github.com/OWNER/darwintv/security/advisories/new
+    about: Please report security issues privately, not in a public issue.

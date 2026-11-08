@@ -1,0 +1,42 @@
+name: Feature request
+description: Propose a driver, milestone, tool or documentation change.
+title: "feat: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is missing or painful today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+    validations:
+      required: true
+  - type: dropdown
+    id: milestone
+    attributes:
+      label: Milestone
+      options:
+        - M0 — Reference
+        - M1 — Hello UART
+        - M2 — XNU console
+        - M3 — Interrupts
+        - M4 — Root
+        - M5 — PineBoard
+        - M6 — Long tail
+        - docs / tooling
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: DTS line, datasheet page, upstream commit, serial log.
