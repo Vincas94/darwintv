@@ -12,13 +12,14 @@ if [ ! -f "$LOADER" ]; then
 fi
 
 mkdir -p "$OUT"
-cp "$ROOT/configs/pi5/config-netboot.txt" "$OUT/config.txt"
 cp "$LOADER" "$OUT/kernel8.img"
 
 if [ -f "$PAYLOAD" ]; then
+    cp "$ROOT/configs/pi5/config-netboot.txt" "$OUT/config.txt"
     cp "$PAYLOAD" "$OUT/payload.bin"
 else
-    echo "warning: no payload at $PAYLOAD yet (M2); the loader will still boot"
+    cp "$ROOT/configs/pi5/config-netboot-nopayload.txt" "$OUT/config.txt"
+    echo "note: no payload at $PAYLOAD yet; serving the M1-only config"
 fi
 
 chmod -R a+rX "$ROOT/build/netboot"

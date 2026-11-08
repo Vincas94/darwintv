@@ -3,7 +3,7 @@
 **Snapshot:** 2026-11-08 · **Phase:** pre-alpha · **XNU on a Pi 5:** not yet.
 
 **Test target:** Raspberry Pi 5 Model B, 8 GB, board revision `d04171` (rev 1.1, Sony UK),
-Raspberry Pi Debug Probe on `/dev/ttyACM0`, first boot from **TFTP**.
+Raspberry Pi Debug Probe on `/dev/ttyACM0`, first boot from **TFTP** via host `192.168.9.103`.
 
 This is the first file a new contributor or AI agent should read. It separates what is built
 from what is assumed, and lists what is blocked on hardware.

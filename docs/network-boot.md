@@ -19,7 +19,7 @@ For a network-first boot with an SD fallback:
 ```ini
 BOOT_ORDER=0xf12
 BOOT_UART=1
-TFTP_IP=192.168.1.50
+TFTP_IP=192.168.9.103
 TFTP_PREFIX=1
 TFTP_PREFIX_STR=darwintv/
 ```
@@ -51,7 +51,7 @@ make netboot
 # -> build/netboot/darwintv/{config.txt,kernel8.img,payload.bin}
 ```
 
-`configs/pi5/config-netboot.txt` is used as `config.txt`:
+`configs/pi5/config-netboot.txt` is used as `config.txt` when a payload exists; the first M1 boot uses `configs/pi5/config-netboot-nopayload.txt` (no `ramfsfile`), so the firmware does not look for a missing payload.
 
 ```ini
 arm_64bit=1

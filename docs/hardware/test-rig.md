@@ -50,10 +50,10 @@ Fill this in before hardware testing. An AI agent needs the actual values, not "
 
 | Item | Value |
 |---|---|
-| Host IP | `<fill: ip route get 1.1.1.1>` |
-| Pi IP | DHCP (fill after first boot) |
+| Host IP | **192.168.9.103** (`enp37s0`, gateway 192.168.9.1) |
+| Pi IP | DHCP on 192.168.9.0/24 (fill after first boot) |
 | `BOOT_ORDER` | `0xf12` (network, SD fallback, restart) |
-| `TFTP_IP` | `<fill: host IP>` |
+| `TFTP_IP` | **192.168.9.103** (use a DHCP reservation/static address) |
 | `TFTP_PREFIX` | `1` |
 | `TFTP_PREFIX_STR` | `darwintv/` |
 
