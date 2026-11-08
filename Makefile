@@ -5,7 +5,7 @@ BOARD ?= pi5
 XNU_VERSION ?= xnu-8796.141.3
 KERNEL ?= build/kernel.development.bcm2712
 
-.PHONY: help bootstrap check lint test fmt docs loader qemu xnu-fetch xnu-patches netboot payload hw-smoke clean
+.PHONY: help bootstrap check lint test fmt docs loader qemu xnu-fetch xnu-patches netboot publish-netboot payload hw-smoke clean
 
 help:
 	@echo "DarwinTV"
@@ -58,6 +58,9 @@ payload:
 
 netboot:
 	./scripts/make-netboot-dir.sh
+
+publish-netboot: netboot
+	./scripts/publish-netboot.sh
 
 hw-smoke:
 	./scripts/flash-payload.sh

@@ -74,12 +74,10 @@ The M1 loader does not read `payload.bin` yet; the network boot still proves the
 
 ```sh
 sudo apt-get install tftpd-hpa
-sudo mkdir -p /srv/darwintv-tftp
-sudo cp -r build/netboot/darwintv /srv/darwintv-tftp/
-sudo chown -R tftp:tftp /srv/darwintv-tftp
+make publish-netboot
 ```
 
-`/etc/default/tftpd-hpa`:
+On Debian/Ubuntu, `/etc/default/tftpd-hpa`:
 
 ```ini
 TFTP_USERNAME="tftp"
@@ -92,6 +90,22 @@ TFTP_OPTIONS="--secure --create"
 sudo systemctl restart tftpd-hpa
 tftp localhost -c get darwintv/config.txt   # smoke test
 ```
+
+### Current host (CachyOS/Arch)
+
+This host uses the Arch `tftp-hpa` package, which serves from `/srv/tftp/` via
+`tftpd.socket` and a dedicated `tftp` user:
+
+```sh
+sudo pacman -S tftp-hpa
+make publish-netboot
+sudo systemctl enable --now tftpd.socket
+sudo ufw allow from 192.168.9.0/24 to any port 69 proto udp
+tftp 127.0.0.1 -c get darwintv/config.txt /tmp/tftp-test.txt
+```
+
+The current host already has `tftpd.socket` active, `/srv/tftp/darwintv/` published,
+and the UFW rule in place.
 
 ### Option B: `dnsmasq` (DHCP + TFTP on the PC)
 
@@ -116,7 +130,7 @@ export WAIT_FOR="DarwinTV"
 
 make loader BOARD=pi5
 make netboot
-sudo cp -r build/netboot/darwintv /srv/darwintv-tftp/   # or rsync
+make publish-netboot   # or rsync
 ./scripts/power-cycle.sh
 ./scripts/serial-capture.sh
 ```
