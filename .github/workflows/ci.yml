@@ -36,11 +36,14 @@ jobs:
         run: make loader BOARD=pi5
       - name: Build QEMU raspi4b
         run: make loader BOARD=qemu-raspi4b
+      - name: Build QEMU virt
+        run: make loader BOARD=qemu-virt
       - name: Inspect
         run: |
           file bootloader/build/pi5/loader.elf
           test -s bootloader/build/pi5/loader8.img
           test -s bootloader/build/qemu-raspi4b/loader8.img
+          test -s bootloader/build/qemu-virt/loader.elf
           size=$(stat -c%s bootloader/build/pi5/loader8.img)
           echo "loader8.img = $size bytes"
           test "$size" -lt 1048576

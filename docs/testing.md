@@ -56,11 +56,13 @@ qemu-system-aarch64 -M raspi4b \
   -serial stdio -display none -monitor none
 ```
 
-For XNU, use QEMU `virt` with a GICv2 and a loader that links into its RAM at `0x40000000`:
+For XNU, use QEMU `virt` with a GICv2. The loader has a `qemu-virt` target linked at
+`0x40000000` with the PL011 at `0x09000000`:
 
 ```sh
+make loader BOARD=qemu-virt
 qemu-system-aarch64 -M virt,gic-version=2 -cpu cortex-a76 -smp 4 -m 2G \
-  -device loader,file=loader.elf -device loader,file=payload.bin,addr=0x48000000 \
+  -kernel bootloader/build/qemu-virt/loader.elf \
   -serial stdio -display none -s -S
 ```
 

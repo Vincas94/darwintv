@@ -29,10 +29,10 @@ third_party/xnu/
 *.mtree
 *.hfs
 *.apfs
-firmware/
-ipsw/
-rootfs/
-logs/
+/firmware/
+/ipsw/
+/rootfs/
+/logs/
 *.log
 
 # Editors and OS

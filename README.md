@@ -12,6 +12,15 @@
   </p>
 </div>
 
+## Start here
+
+| If you are... | Read |
+|---|---|
+| New to the project | [`STATUS.md`](STATUS.md) |
+| Checking a hardware claim | [`docs/facts.md`](docs/facts.md) |
+| Looking for the next task | [`docs/open-questions.md`](docs/open-questions.md) |
+| An AI agent | [`AGENTS.md`](AGENTS.md) + [`docs/ai-handoff.md`](docs/ai-handoff.md) |
+
 > **Status: pre-alpha research.** There is no working Pi 5 port yet. The first milestone is
 > XNU printing its banner on the Pi 5 debug UART. The long-term target is the unmodified
 > tvOS 16 `PineBoard` userland on a Raspberry Pi 5.

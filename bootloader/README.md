@@ -7,6 +7,7 @@ EL3/EL2 to EL1, and prints a banner on the PL011 console.
 |---|---|---|---|
 | Raspberry Pi 5 | `pi5` | `0x00200000` | `0x107d001000` (UART10 debug connector) |
 | QEMU `raspi4b` | `qemu-raspi4b` | `0x00080000` | `0xfe201000` (PL011) |
+| QEMU `virt` | `qemu-virt` | `0x40000000` | `0x09000000` (PL011) |
 
 ```sh
 make BOARD=pi5            # -> build/pi5/loader8.img

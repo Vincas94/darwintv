@@ -36,7 +36,8 @@ then SD, then loops.
 Apply and reboot:
 
 ```sh
-sudo rpi-eeprom-config --apply   # or: sudo rpi-eeprom-config --edit, then reboot
+sudo rpi-eeprom-config --edit    # edit and apply; then reboot
+# or: sudo rpi-eeprom-config --apply boot.conf
 sudo reboot
 ```
 

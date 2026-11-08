@@ -4,11 +4,13 @@ This file is the contract for AI-assisted work in DarwinTV. Read it before chang
 
 ## Read first
 
-1. `README.md`
-2. `ARCHITECTURE.md`
-3. `docs/hardware/pi5.md`
-4. `docs/boot-flow.md`
-5. `docs/decisions/`
+1. `STATUS.md`
+2. `docs/facts.md`
+3. `docs/open-questions.md`
+4. `docs/ai-handoff.md`
+5. `README.md` and `ARCHITECTURE.md`
+6. `docs/hardware/pi5.md` and `docs/boot-flow.md`
+7. `docs/patches.md` and `docs/decisions/`
 
 ## Hard rules
 
@@ -50,9 +52,13 @@ make qemu                 # needs qemu-system-aarch64
 
 ## Documentation
 
-- New architectural decision → add `docs/decisions/NNNN-title.md`.
-- New hardware fact → add a row to `docs/hardware/pi5.md` with a source.
-- New milestone/status change → update `ROADMAP.md` and `CHANGELOG.md`.
+- **Every hardware fact** gets a row in `docs/facts.md` with a source and `A`/`B`/`C` confidence.
+- A `C` fact also gets an entry in `docs/open-questions.md` with a concrete test.
+- New architectural decision → `docs/decisions/NNNN-title.md` and the index.
+- New hardware detail → `docs/hardware/pi5.md` and `docs/facts.md`.
+- New milestone/status change → `STATUS.md`, `ROADMAP.md`, `CHANGELOG.md`.
+- New research → `docs/research/YYYY-MM-DD-short-title.md`.
+- If a source contradicts a fact, fix the fact and record the change in the commit.
 
 ## PRs
 

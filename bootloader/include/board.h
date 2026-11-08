@@ -12,6 +12,10 @@
 #define BOARD_NAME "qemu-raspi4b"
 #define PL011_BASE 0xfe201000UL
 #define LOAD_ADDR 0x00080000UL
+#elif defined(BOARD_QEMU_VIRT)
+#define BOARD_NAME "qemu-virt"
+#define PL011_BASE 0x09000000UL
+#define LOAD_ADDR 0x40000000UL
 #else
 #define BOARD_NAME "raspberry-pi-5"
 #define PL011_BASE 0x107d001000UL

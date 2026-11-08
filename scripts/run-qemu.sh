@@ -9,7 +9,15 @@ if ! command -v qemu-system-aarch64 >/dev/null 2>&1; then
     exit 1
 fi
 
-make -C "$ROOT/bootloader" BOARD=qemu-raspi4b
+BOARD="${1:-qemu-raspi4b}"
+make -C "$ROOT/bootloader" BOARD="$BOARD"
+
+if [ "$BOARD" = "qemu-virt" ]; then
+    exec qemu-system-aarch64 \
+        -M virt,gic-version=2 -cpu cortex-a76 -smp 4 -m 2G \
+        -kernel "$ROOT/bootloader/build/qemu-virt/loader.elf" \
+        -serial stdio -display none -monitor none
+fi
 
 exec qemu-system-aarch64 \
     -M raspi4b \

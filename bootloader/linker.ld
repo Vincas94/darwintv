@@ -36,5 +36,5 @@ SECTIONS
         *(.eh_frame*)
     }
 
-    ASSERT(__stack_top <= 0x02000000, "loader overlaps the XNU load window")
+    ASSERT(__stack_top <= 0x02000000 || LOAD_ADDR >= 0x40000000, "loader overlaps the XNU load window")
 }

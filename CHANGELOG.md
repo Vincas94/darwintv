@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Large-image strategy: block-backed root, RAM-disk bring-up path, U-Boot/EDK2 first stage.
 - Testing strategy: test pyramid, QEMU-first, fast hardware smoke, UART as fallback.
 - Ethernet-first network boot loop, TFTP tree helper, and Pi 5 vs phone comparison.
+- Status, canonical facts, open questions, AI handoff, XNU build, IPSW, patch, glossary,
+  test-rig, safety and CI docs.
+- `qemu-virt` loader target; anchored `.gitignore` so `tools/ipsw` and `tools/rootfs` are tracked.
 
 ## [0.0.1] - 2026-11-08
 

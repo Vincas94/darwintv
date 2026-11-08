@@ -4,20 +4,32 @@ ROOT = Path(__file__).resolve().parents[1]
 
 REQUIRED = [
     "README.md",
+    "STATUS.md",
     "LICENSE",
     "NOTICE",
     "AGENTS.md",
     "ARCHITECTURE.md",
     "ROADMAP.md",
     "docs/index.md",
+    "docs/facts.md",
+    "docs/open-questions.md",
+    "docs/ai-handoff.md",
+    "docs/building-xnu.md",
+    "docs/ipsw.md",
+    "docs/patches.md",
+    "docs/glossary.md",
+    "docs/safety.md",
     "docs/hardware/pi5.md",
+    "docs/hardware/test-rig.md",
     "docs/boot-flow.md",
     "docs/tvos.md",
     "bootloader/linker.ld",
     "bootloader/src/start.S",
     "configs/pi5/config.txt",
+    "patches/README.md",
     "tools/adt/adt.py",
     "tools/ipsw/extract.py",
+    "tools/rootfs/README.md",
 ]
 
 
@@ -36,3 +48,15 @@ def test_no_apple_firmware_is_committed() -> None:
         and any(path.name.endswith(suffix) for suffix in forbidden)
     ]
     assert found == []
+
+
+def test_required_files_are_tracked() -> None:
+    import subprocess
+
+    if not (ROOT / ".git").exists():
+        import pytest
+
+        pytest.skip("not a git checkout")
+    tracked = subprocess.check_output(["git", "-C", str(ROOT), "ls-files"], text=True).splitlines()
+    missing = [name for name in REQUIRED if name not in tracked]
+    assert missing == []

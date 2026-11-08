@@ -29,6 +29,8 @@ markdown_extensions:
   - toc:
       permalink: true
   - pymdownx.details
+  - pymdownx.snippets:
+      base_path: ["."]
   - pymdownx.highlight
   - pymdownx.superfences:
       custom_fences:
@@ -38,21 +40,36 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
 
+
 nav:
   - Home: index.md
+  - Status: status.md
+  - Start here:
+      - Canonical facts: facts.md
+      - Open questions: open-questions.md
+      - AI handoff: ai-handoff.md
+      - Glossary: glossary.md
   - Getting started: getting-started.md
+  - Building:
+      - Building XNU: building-xnu.md
+      - IPSW extraction: ipsw.md
+      - Patch plan: patches.md
   - Hardware:
       - Raspberry Pi 5: hardware/pi5.md
+      - Test rig: hardware/test-rig.md
+      - Safety: safety.md
   - Boot flow: boot-flow.md
+  - tvOS: tvos.md
   - Updating images: updates.md
   - Booting large images: large-images.md
   - Testing and dev loop: testing.md
   - Network boot: network-boot.md
   - Why Pi 5: comparison.md
-  - tvOS: tvos.md
+  - CI: ci.md
   - Research:
       - Initial survey (2026-11-08): research/2026-11-08-initial-survey.md
   - Decisions:
+      - Index: decisions/README.md
       - "0001 — Fresh repository": decisions/0001-fresh-repo.md
       - "0002 — Pinned XNU and patches": decisions/0002-pinned-xnu-and-patches.md
       - "0003 — AppleTV5,3 / tvOS 16": decisions/0003-target-appletv5-3-tvos-16.md
