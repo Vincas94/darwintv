@@ -47,6 +47,8 @@ nav:
   - Updating images: updates.md
   - Booting large images: large-images.md
   - Testing and dev loop: testing.md
+  - Network boot: network-boot.md
+  - Why Pi 5: comparison.md
   - tvOS: tvos.md
   - Research:
       - Initial survey (2026-11-08): research/2026-11-08-initial-survey.md
@@ -58,4 +60,5 @@ nav:
       - "0005 — File-based updates": decisions/0005-update-workflow.md
       - "0006 — Large images": decisions/0006-large-image-boot.md
       - "0007 — Test strategy": decisions/0007-test-strategy.md
+      - "0008 — Ethernet-first": decisions/0008-ethernet-first.md
   - Contributing: contributing.md

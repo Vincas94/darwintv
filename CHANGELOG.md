@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update workflow: FAT32 boot files, separate `payload.bin`, incremental root updates, A/B slots.
 - Large-image strategy: block-backed root, RAM-disk bring-up path, U-Boot/EDK2 first stage.
 - Testing strategy: test pyramid, QEMU-first, fast hardware smoke, UART as fallback.
+- Ethernet-first network boot loop, TFTP tree helper, and Pi 5 vs phone comparison.
 
 ## [0.0.1] - 2026-11-08
 
